@@ -1,16 +1,17 @@
 package com.example.avisreader;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.example.avisreader.data.NewsPaper;
 
 
-public class WebViewActivity extends Activity {
+public class WebViewActivity extends ActionBarActivity {
 
     private WebView webView;
 
@@ -29,12 +30,14 @@ public class WebViewActivity extends Activity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
-            }});
+            }
+        });
 
-        //String urlToLoad = getIntent().getStringExtra("url");
-        NewsPaper np = getIntent().getParcelableExtra("url");
-        Log.d("APP", np.toString());
-        //webView.loadUrl(urlToLoad);
+        NewsPaper newsPaper = getIntent().getParcelableExtra("url");
+        Log.d("APP", newsPaper.toString());
+        webView.loadUrl(newsPaper.getUrl());
+        getActionBar().setTitle(newsPaper.getTitle());
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -48,5 +51,16 @@ public class WebViewActivity extends Activity {
         // If it wasn't the Back key or there's no web page history, bubble up to the default
         // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

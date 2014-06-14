@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomActionBarTheme"
+           parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/ActionbarStyle</item>
+
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/ActionbarStyle</item>
+    </style>
+
+
+    <!-- Actionbar style -->
+    <style name="ActionbarStyle"
+           parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/actionbar_color</item>
+
+        <!-- Support library compatibility -->
+        <item name="background">@color/actionbar_color</item>
+    </style>
+</resources>

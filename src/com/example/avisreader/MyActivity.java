@@ -1,17 +1,12 @@
 package com.example.avisreader;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import com.example.avisreader.adapter.MainListAdapter;
 import com.example.avisreader.data.NewsPaper;
@@ -20,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MyActivity extends Activity {
+public class MyActivity extends ActionBarActivity {
 
     private List<NewsPaper> newsPapersList;
     private ListView listView;

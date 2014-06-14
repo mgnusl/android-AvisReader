@@ -4,10 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.example.avisreader.R;
 import com.example.avisreader.data.NewsPaper;
 
@@ -28,12 +25,15 @@ public class MainListAdapter extends ArrayAdapter<NewsPaper> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = (LinearLayout) inflater.inflate(resource, null);
+        convertView = (RelativeLayout) inflater.inflate(resource, null);
 
         NewsPaper newsPaper = getItem(position);
 
         TextView rowText = (TextView) convertView.findViewById(R.id.newsPaperTitle);
         rowText.setText(newsPaper.getTitle());
+
+        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.iconImageView);
+        iconImageView.setImageDrawable(newsPaper.getIcon());
 
         return convertView;
     }
