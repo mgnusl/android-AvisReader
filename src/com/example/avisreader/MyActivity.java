@@ -17,6 +17,7 @@ import com.example.avisreader.data.NewsPaper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MyActivity extends ActionBarActivity {
@@ -38,9 +39,16 @@ public class MyActivity extends ActionBarActivity {
         for (String s : tempList) {
             String[] temp = s.split(",");
             int resID = getResources().getIdentifier(((String) temp[2].trim()), "drawable", MyActivity.this.getPackageName());
+            // Hvis ikke avisen har et gyldig ikon
+            if(resID == 0)
+                resID = getResources().getIdentifier("no_icon", "drawable", MyActivity.this.getPackageName());
+
             Drawable icon = getResources().getDrawable(resID);
             newsPapersList.add(new NewsPaper(temp[1], temp[0], icon));
         }
+
+        // Sort the array alphabetically
+        Collections.sort(newsPapersList);
 
         listView.setAdapter(new MainListAdapter(this, R.layout.newspaper_rowitem, newsPapersList));
 

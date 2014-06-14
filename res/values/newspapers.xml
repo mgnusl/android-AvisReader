@@ -4,5 +4,8 @@
         <item>http://www.vg.no, VG, vg</item>
         <item>http://www.dagbladet.no, Dagbladet, db</item>
         <item>http://www.aftenposten.no, Aftenposten, ap</item>
+        <item>http://www.adressa.no, Adressa, a</item>
+        <item>http://www.budstikka.no, Budstikka, a</item>
+        <item>http://www.op.no, Østlands-Posten, a</item>
     </string-array>
 </resources>

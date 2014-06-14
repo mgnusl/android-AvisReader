@@ -8,7 +8,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.example.avisreader.R;
 
-public class NewsPaper implements Parcelable {
+public class NewsPaper implements Parcelable, Comparable {
 
     private String title, url;
     private Drawable icon;
@@ -91,5 +91,13 @@ public class NewsPaper implements Parcelable {
         url = in.readString();
         isFavorite = in.readByte() != 0;
         icon = new BitmapDrawable((Bitmap) in.readValue(Bitmap.class.getClassLoader()));
+    }
+
+    // Comparable method
+
+    @Override
+    public int compareTo(Object another) {
+        NewsPaper np = (NewsPaper) another;
+        return title.compareTo(np.getTitle());
     }
 }
