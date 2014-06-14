@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,6 +16,7 @@ import com.example.avisreader.data.NewsPaper;
 public class WebViewActivity extends ActionBarActivity {
 
     private WebView webView;
+    private NewsPaper newsPaper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,8 +36,7 @@ public class WebViewActivity extends ActionBarActivity {
             }
         });
 
-        NewsPaper newsPaper = getIntent().getParcelableExtra("url");
-        Log.d("APP", newsPaper.toString());
+        newsPaper = getIntent().getParcelableExtra("url");
         webView.loadUrl(newsPaper.getUrl());
         getActionBar().setTitle(newsPaper.getTitle());
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -53,14 +55,29 @@ public class WebViewActivity extends ActionBarActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    private void refreshWebPage() {
+        webView.loadUrl(newsPaper.getUrl());
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.action_refresh:
+                Log.d("APP", "REFRESH");
+                refreshWebPage();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.webview_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

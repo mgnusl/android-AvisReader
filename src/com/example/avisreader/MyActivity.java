@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -26,15 +29,15 @@ public class MyActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        listView = (ListView)findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.listView);
 
         newsPapersList = new ArrayList<NewsPaper>();
 
         // Fill newsPaperList with NewsPapers
         List<String> tempList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.newspapers)));
-        for(String s : tempList) {
+        for (String s : tempList) {
             String[] temp = s.split(",");
-            int resID = getResources().getIdentifier(((String)temp[2].trim()), "drawable", MyActivity.this.getPackageName());
+            int resID = getResources().getIdentifier(((String) temp[2].trim()), "drawable", MyActivity.this.getPackageName());
             Drawable icon = getResources().getDrawable(resID);
             newsPapersList.add(new NewsPaper(temp[1], temp[0], icon));
         }
@@ -49,5 +52,27 @@ public class MyActivity extends ActionBarActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.home_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Log.d("APP", "SØK");
+                return true;
+            case R.id.action_add:
+                Log.d("APP", "ADD");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }
