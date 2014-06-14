@@ -2,6 +2,7 @@ package com.example.avisreader;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,7 +38,11 @@ public class MyActivity extends Activity {
         List<String> tempList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.newspapers)));
         for(String s : tempList) {
             String[] temp = s.split(",");
-            newsPapersList.add(new NewsPaper(temp[1], temp[0]));
+            int resID = getResources().getIdentifier(((String)temp[2].trim()), "drawable", MyActivity.this.getPackageName());
+            Log.d("APP", "" + resID);
+            Log.d("APP", temp[2]);
+            Drawable icon = getResources().getDrawable(resID);
+            newsPapersList.add(new NewsPaper(temp[1], temp[0], icon));
         }
 
         listView.setAdapter(new MainListAdapter(this, R.layout.newspaper_rowitem, newsPapersList));
@@ -46,7 +51,7 @@ public class MyActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 startActivity(new Intent(MyActivity.this, WebViewActivity.class).putExtra("url",
-                        newsPapersList.get(position).getUrl()));
+                        newsPapersList.get(position)));
             }
         });
 

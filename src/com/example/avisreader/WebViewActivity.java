@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import com.example.avisreader.data.NewsPaper;
 
 
 public class WebViewActivity extends Activity {
@@ -30,9 +31,10 @@ public class WebViewActivity extends Activity {
                 return true;
             }});
 
-        String urlToLoad = getIntent().getStringExtra("url");
-        Log.d("APP", urlToLoad);
-        webView.loadUrl(urlToLoad);
+        //String urlToLoad = getIntent().getStringExtra("url");
+        NewsPaper np = getIntent().getParcelableExtra("url");
+        Log.d("APP", np.toString());
+        //webView.loadUrl(urlToLoad);
 
     }
 
