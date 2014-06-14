@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,8 +35,6 @@ public class MyActivity extends ActionBarActivity {
         for(String s : tempList) {
             String[] temp = s.split(",");
             int resID = getResources().getIdentifier(((String)temp[2].trim()), "drawable", MyActivity.this.getPackageName());
-            Log.d("APP", "" + resID);
-            Log.d("APP", temp[2]);
             Drawable icon = getResources().getDrawable(resID);
             newsPapersList.add(new NewsPaper(temp[1], temp[0], icon));
         }

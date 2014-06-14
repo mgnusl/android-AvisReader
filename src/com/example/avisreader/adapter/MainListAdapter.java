@@ -25,15 +25,33 @@ public class MainListAdapter extends ArrayAdapter<NewsPaper> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = (RelativeLayout) inflater.inflate(resource, null);
+        convertView = inflater.inflate(resource, null);
 
-        NewsPaper newsPaper = getItem(position);
+        final NewsPaper newsPaper = getItem(position);
 
-        TextView rowText = (TextView) convertView.findViewById(R.id.newsPaperTitle);
-        rowText.setText(newsPaper.getTitle());
+        TextView title = (TextView) convertView.findViewById(R.id.newsPaperTitle);
+        title.setText(newsPaper.getTitle());
 
-        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.iconImageView);
-        iconImageView.setImageDrawable(newsPaper.getIcon());
+        final ImageView favoriteImage = (ImageView) convertView.findViewById(R.id.favoriteImageView);
+        favoriteImage.setImageResource(newsPaper.isFavorite() ? R.drawable.ic_action_rating_important :
+                R.drawable.ic_action_rating_not_important);
+
+        favoriteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(newsPaper.isFavorite()) {
+                    favoriteImage.setImageResource(R.drawable.ic_action_rating_not_important);
+                    newsPaper.setFavorite(false);
+                }
+                else {
+                    favoriteImage.setImageResource(R.drawable.ic_action_rating_important);
+                    newsPaper.setFavorite(true);
+                }
+            }
+        });
+
+        ImageView iconImage = (ImageView) convertView.findViewById(R.id.iconImageView);
+        iconImage.setImageDrawable(newsPaper.getIcon());
 
         return convertView;
     }

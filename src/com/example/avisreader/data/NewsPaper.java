@@ -44,6 +44,14 @@ public class NewsPaper implements Parcelable {
         this.icon = icon;
     }
 
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
     @Override
     public String toString() {
         return "NewsPaper{" +
