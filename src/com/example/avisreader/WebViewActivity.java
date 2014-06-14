@@ -69,6 +69,10 @@ public class WebViewActivity extends ActionBarActivity {
                 Log.d("APP", "REFRESH");
                 refreshWebPage();
                 return true;
+            case R.id.action_share:
+                Log.d("APP", "SHARE");
+                Log.d("APP", webView.getUrl());
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
