@@ -93,10 +93,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Newspaper np = new Newspaper();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Log.d("APP", cursor.getString(0));
-            Log.d("APP", cursor.getString(1));
-            Log.d("APP", cursor.getString(2));
-            Log.d("APP", cursor.getString(3));
 
             np = new Newspaper(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2),
                     (Integer.parseInt(cursor.getString(3)) == 1 ? true : false));

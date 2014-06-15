@@ -1,15 +1,16 @@
 package com.example.avisreader;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import com.example.avisreader.adapter.MainListAdapter;
 import com.example.avisreader.data.Newspaper;
@@ -24,6 +25,8 @@ public class MyActivity extends ActionBarActivity {
 
     private List<Newspaper> newsPapersList;
     private ListView listView;
+    private DatabaseHelper dbHelper;
+    private MainListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class MyActivity extends ActionBarActivity {
 
         listView = (ListView) findViewById(R.id.listView);
 
-        DatabaseHelper dbHelper = DatabaseHelper.getInstance(this);
+        dbHelper = DatabaseHelper.getInstance(this);
 
 
         newsPapersList = new ArrayList<Newspaper>();
@@ -43,7 +46,7 @@ public class MyActivity extends ActionBarActivity {
             String[] temp = s.split(",");
             int resID = getResources().getIdentifier(((String) temp[2].trim()), "drawable", MyActivity.this.getPackageName());
             // If no valid icon was found
-            if(resID == 0)
+            if (resID == 0)
                 resID = getResources().getIdentifier("no_icon", "drawable", MyActivity.this.getPackageName());
 
             Drawable icon = getResources().getDrawable(resID);
@@ -54,7 +57,8 @@ public class MyActivity extends ActionBarActivity {
         // Sort the array alphabetically
         Collections.sort(newsPapersList);
 
-        listView.setAdapter(new MainListAdapter(this, R.layout.newspaper_rowitem, newsPapersList));
+        adapter = new MainListAdapter(this, R.layout.newspaper_rowitem, newsPapersList);
+        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -65,11 +69,45 @@ public class MyActivity extends ActionBarActivity {
         });
 
 
-        dbHelper.getNewspaper(2);
+        Log.d("APP", dbHelper.getNewspaper(2).toString());
 
+    }
 
+    public void showAddPopupDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(getResources().getString(R.string.add_newspaper));
 
+        final View inflator = this.getLayoutInflater().inflate(getResources().getLayout(R.layout.dialog_add), null);
 
+        alertDialogBuilder
+                .setView(inflator)
+
+                .setPositiveButton(getResources().getString(R.string.add),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                EditText titleEditText = (EditText) inflator.findViewById(R.id.titleEditText);
+                                EditText urlEditText = (EditText) inflator.findViewById(R.id.urlEditText);
+                                Newspaper np = new Newspaper(
+                                        titleEditText.getText().toString(),
+                                        urlEditText.getText().toString(),
+                                        0
+                                );
+                                dbHelper.addNewspaper(np);
+                                newsPapersList.add(np);
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                .setNegativeButton(getResources().getString(R.string.cancel),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        AlertDialog dialog = alertDialogBuilder.create();
+        dialog.show();
     }
 
     @Override
@@ -87,6 +125,7 @@ public class MyActivity extends ActionBarActivity {
                 return true;
             case R.id.action_add:
                 Log.d("APP", "ADD");
+                showAddPopupDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
