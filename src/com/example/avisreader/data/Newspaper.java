@@ -13,11 +13,22 @@ public class Newspaper implements Parcelable, Comparable {
     private Drawable icon;
     private boolean isFavorite;
 
+    // Standard constructor. This should normally be used
     public Newspaper(String title, String url, Drawable icon) {
         this.title = title;
         this.url = url;
         this.icon = icon;
     }
+
+    // Constructor used when fetching custom Newspapers from database
+    public Newspaper(int id, String title, String url, boolean isFavorite) {
+        this.title = title;
+        this.url = url;
+        this.id = id;
+        this.isFavorite = isFavorite;
+    }
+
+    public Newspaper() {}
 
     public String getTitle() {
         return title;

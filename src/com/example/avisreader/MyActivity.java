@@ -32,7 +32,7 @@ public class MyActivity extends ActionBarActivity {
 
         listView = (ListView) findViewById(R.id.listView);
 
-        DatabaseHelper lol = DatabaseHelper.getInstance(this);
+        DatabaseHelper dbHelper = DatabaseHelper.getInstance(this);
 
 
         newsPapersList = new ArrayList<Newspaper>();
@@ -42,12 +42,13 @@ public class MyActivity extends ActionBarActivity {
         for (String s : tempList) {
             String[] temp = s.split(",");
             int resID = getResources().getIdentifier(((String) temp[2].trim()), "drawable", MyActivity.this.getPackageName());
-            // Hvis ikke avisen har et gyldig ikon
+            // If no valid icon was found
             if(resID == 0)
                 resID = getResources().getIdentifier("no_icon", "drawable", MyActivity.this.getPackageName());
 
             Drawable icon = getResources().getDrawable(resID);
             newsPapersList.add(new Newspaper(temp[1], temp[0], icon));
+            dbHelper.addNewspaper(new Newspaper(temp[1], temp[0], icon));
         }
 
         // Sort the array alphabetically
@@ -62,6 +63,10 @@ public class MyActivity extends ActionBarActivity {
                         newsPapersList.get(position)));
             }
         });
+
+
+        dbHelper.getNewspaper(2);
+
 
 
 
