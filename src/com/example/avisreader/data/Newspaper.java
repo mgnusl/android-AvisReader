@@ -101,14 +101,14 @@ public class Newspaper implements Parcelable, Comparable {
         dest.writeString(title);
         dest.writeString(url);
         dest.writeByte((byte) (isFavorite ? 1 : 0));
-        dest.writeValue(((BitmapDrawable) icon).getBitmap());
+        //dest.writeValue(((BitmapDrawable) icon).getBitmap());
     }
 
     public Newspaper(Parcel in) {
         title = in.readString();
         url = in.readString();
         isFavorite = in.readByte() != 0;
-        icon = new BitmapDrawable((Bitmap) in.readValue(Bitmap.class.getClassLoader()));
+        //icon = new BitmapDrawable((Bitmap) in.readValue(Bitmap.class.getClassLoader()));
     }
 
     // Comparable method

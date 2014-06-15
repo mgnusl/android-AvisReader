@@ -36,7 +36,7 @@ public class WebViewActivity extends ActionBarActivity {
             }
         });
 
-        newspaper = getIntent().getParcelableExtra("url");
+        Newspaper newspaper = getIntent().getParcelableExtra("url");
         webView.loadUrl(newspaper.getUrl());
         getActionBar().setTitle(newspaper.getTitle());
         getActionBar().setDisplayHomeAsUpEnabled(true);

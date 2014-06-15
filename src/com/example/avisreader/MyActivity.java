@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import com.example.avisreader.adapter.MainListAdapter;
 import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,7 +76,7 @@ public class MyActivity extends ActionBarActivity {
 
     }
 
-    public void showAddPopupDialog() {
+    private void showAddPopupDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle(getResources().getString(R.string.add_newspaper));
 
@@ -88,10 +91,21 @@ public class MyActivity extends ActionBarActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 EditText titleEditText = (EditText) inflator.findViewById(R.id.titleEditText);
                                 EditText urlEditText = (EditText) inflator.findViewById(R.id.urlEditText);
+
+                                // Validate the url
+                                String url = urlEditText.getText().toString();
+                                if(!url.contains("http://")) {
+                                    StringBuilder sb = new StringBuilder(url);
+                                    sb.insert(0, "http://");
+                                    url = sb.toString();
+                                }
+
+                                Log.d("APP", url);
+
                                 Newspaper np = new Newspaper(
                                         titleEditText.getText().toString(),
-                                        urlEditText.getText().toString(),
-                                        0
+                                        url,
+                                        null
                                 );
                                 dbHelper.addNewspaper(np);
                                 newsPapersList.add(np);
@@ -109,6 +123,7 @@ public class MyActivity extends ActionBarActivity {
         AlertDialog dialog = alertDialogBuilder.create();
         dialog.show();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
