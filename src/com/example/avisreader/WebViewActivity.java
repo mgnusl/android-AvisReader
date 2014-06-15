@@ -10,13 +10,13 @@ import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import com.example.avisreader.data.NewsPaper;
+import com.example.avisreader.data.Newspaper;
 
 
 public class WebViewActivity extends ActionBarActivity {
 
     private WebView webView;
-    private NewsPaper newsPaper;
+    private Newspaper newspaper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,9 +36,9 @@ public class WebViewActivity extends ActionBarActivity {
             }
         });
 
-        newsPaper = getIntent().getParcelableExtra("url");
-        webView.loadUrl(newsPaper.getUrl());
-        getActionBar().setTitle(newsPaper.getTitle());
+        newspaper = getIntent().getParcelableExtra("url");
+        webView.loadUrl(newspaper.getUrl());
+        getActionBar().setTitle(newspaper.getTitle());
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
@@ -56,7 +56,7 @@ public class WebViewActivity extends ActionBarActivity {
     }
 
     private void refreshWebPage() {
-        webView.loadUrl(newsPaper.getUrl());
+        webView.loadUrl(newspaper.getUrl());
     }
 
     @Override

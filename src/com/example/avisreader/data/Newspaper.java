@@ -1,20 +1,19 @@
 package com.example.avisreader.data;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.example.avisreader.R;
 
-public class NewsPaper implements Parcelable, Comparable {
+public class Newspaper implements Parcelable, Comparable {
 
     private String title, url;
+    private int id;
     private Drawable icon;
     private boolean isFavorite;
 
-    public NewsPaper(String title, String url, Drawable icon) {
+    public Newspaper(String title, String url, Drawable icon) {
         this.title = title;
         this.url = url;
         this.icon = icon;
@@ -52,6 +51,14 @@ public class NewsPaper implements Parcelable, Comparable {
         this.isFavorite = isFavorite;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "NewsPaper{" +
@@ -63,13 +70,13 @@ public class NewsPaper implements Parcelable, Comparable {
     }
 
     // Parcelable methods
-    public static final Parcelable.Creator<NewsPaper> CREATOR = new Parcelable.Creator<NewsPaper>() {
-        public NewsPaper createFromParcel(Parcel source) {
-            return new NewsPaper(source);
+    public static final Parcelable.Creator<Newspaper> CREATOR = new Parcelable.Creator<Newspaper>() {
+        public Newspaper createFromParcel(Parcel source) {
+            return new Newspaper(source);
         }
 
-        public NewsPaper[] newArray(int size) {
-            return new NewsPaper[size];
+        public Newspaper[] newArray(int size) {
+            return new Newspaper[size];
         }
     };
 
@@ -86,7 +93,7 @@ public class NewsPaper implements Parcelable, Comparable {
         dest.writeValue(((BitmapDrawable) icon).getBitmap());
     }
 
-    public NewsPaper(Parcel in) {
+    public Newspaper(Parcel in) {
         title = in.readString();
         url = in.readString();
         isFavorite = in.readByte() != 0;
@@ -97,7 +104,7 @@ public class NewsPaper implements Parcelable, Comparable {
 
     @Override
     public int compareTo(Object another) {
-        NewsPaper np = (NewsPaper) another;
+        Newspaper np = (Newspaper) another;
         return title.compareTo(np.getTitle());
     }
 }
