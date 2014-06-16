@@ -1,14 +1,12 @@
 package com.example.avisreader;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -17,14 +15,12 @@ import com.example.avisreader.adapter.MainListAdapter;
 import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class MyActivity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity {
 
     private List<Newspaper> newsPapersList;
     private ListView listView;
@@ -49,10 +45,10 @@ public class MyActivity extends ActionBarActivity {
             List<String> tempList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.newspapers)));
             for (String s : tempList) {
                 String[] temp = s.split(",");
-                int resID = getResources().getIdentifier(((String) temp[2].trim()), "drawable", MyActivity.this.getPackageName());
+                int resID = getResources().getIdentifier(((String) temp[2].trim()), "drawable", HomeActivity.this.getPackageName());
                 // If no valid icon was found
                 if (resID == 0)
-                    resID = getResources().getIdentifier("no_icon", "drawable", MyActivity.this.getPackageName());
+                    resID = getResources().getIdentifier("no_icon", "drawable", HomeActivity.this.getPackageName());
 
                 Drawable icon = getResources().getDrawable(resID);
                 Newspaper np = new Newspaper(temp[1], temp[0], icon);
@@ -76,7 +72,7 @@ public class MyActivity extends ActionBarActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(MyActivity.this, WebViewActivity.class).putExtra("url",
+                startActivity(new Intent(HomeActivity.this, WebViewActivity.class).putExtra("url",
                         newsPapersList.get(position)));
             }
         });
