@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.example.avisreader.data.Newspaper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -73,10 +74,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean deleteNewspaper(Newspaper np) {
-        return false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        boolean success = db.delete(TABLE_NEWSPAPER, KEY_ID + " = ?", new String[] {String.valueOf(np.getId()) } ) > 0;
+        db.close();
+        return success;
     }
 
-    public void updateNewspaper(Newspaper np) {
+    public int updateNewspaper(Newspaper np) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITLE, np.getTitle());
+        values.put(KEY_URL, np.getUrl());
+        values.put(KEY_ISFAVORITE, (np.isFavorite() ? 1 : 0));
+
+        return db.update(TABLE_NEWSPAPER, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(np.getId())});
 
     }
 
@@ -106,7 +119,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<Newspaper> getAllNewspapers() {
-        return null;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_NEWSPAPER;
+        Cursor cursor = db.rawQuery(query, null);
+        ArrayList<Newspaper> newsPaperList = new ArrayList<Newspaper>();
+
+        if(cursor.moveToFirst()) {
+            do {
+                Newspaper np = new Newspaper();
+                np.setId(Integer.parseInt(cursor.getString(0)));
+                np.setTitle(cursor.getString(1));
+                np.setUrl(cursor.getString(2));
+                np.setFavorite((Integer.parseInt(cursor.getString(3)) == 1) ? true : false);
+
+                newsPaperList.add(np);
+            } while(cursor.moveToNext());
+        }
+
+        return newsPaperList;
     }
 
     // Helper methods

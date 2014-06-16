@@ -53,8 +53,10 @@ public class MyActivity extends ActionBarActivity {
                 resID = getResources().getIdentifier("no_icon", "drawable", MyActivity.this.getPackageName());
 
             Drawable icon = getResources().getDrawable(resID);
-            newsPapersList.add(new Newspaper(temp[1], temp[0], icon));
-            dbHelper.addNewspaper(new Newspaper(temp[1], temp[0], icon));
+            Newspaper np = new Newspaper(temp[1], temp[0], icon);
+            int id = dbHelper.addNewspaper(np);
+            np.setId(id);
+            newsPapersList.add(np);
         }
 
         // Sort the array alphabetically
@@ -72,7 +74,13 @@ public class MyActivity extends ActionBarActivity {
         });
 
 
-        Log.d("APP", dbHelper.getNewspaper(2).toString());
+        Log.d("APP", "GET" + dbHelper.getNewspaper(2).toString());
+
+        Log.d("APP", "UPDATE : " + dbHelper.updateNewspaper(newsPapersList.get(1)));
+        Log.d("APP", "DELETE : " + dbHelper.deleteNewspaper(newsPapersList.get(1)));
+
+        for(Newspaper np : dbHelper.getAllNewspapers())
+            Log.d("APP", np.toString());
 
     }
 
@@ -107,7 +115,8 @@ public class MyActivity extends ActionBarActivity {
                                         url,
                                         null
                                 );
-                                dbHelper.addNewspaper(np);
+                                int id = dbHelper.addNewspaper(np);
+                                np.setId(id);
                                 newsPapersList.add(np);
                                 adapter.notifyDataSetChanged();
                             }
