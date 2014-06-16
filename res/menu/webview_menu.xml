@@ -5,7 +5,9 @@
         android:id="@+id/action_share"
         android:icon="@drawable/ic_action_social_share"
         android:title="@string/share"
-        avisreader:showAsAction="always"/>
+        avisreader:showAsAction="always"
+
+        />
 
     <item
         android:id="@+id/action_refresh"

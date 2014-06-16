@@ -1,7 +1,10 @@
 package com.example.avisreader;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -16,9 +19,12 @@ public class WebViewActivity extends ActionBarActivity {
 
     private WebView webView;
     private Newspaper newspaper;
+    private ShareActionProvider shareActionProvider;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
 
@@ -69,7 +75,10 @@ public class WebViewActivity extends ActionBarActivity {
                 refreshWebPage(webView.getUrl());
                 return true;
             case R.id.action_share:
-                Log.d("APP", webView.getUrl());
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, webView.getUrl());
+                startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_this)));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -80,6 +89,21 @@ public class WebViewActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.webview_menu, menu);
+
+        // Share
+        // Set up ShareActionProvider's default share intent
+        /*MenuItem shareItem = menu.findItem(R.id.action_share);
+        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        String stringToShare = "HEI" + webView.getUrl();
+        Log.d("APP", stringToShare);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, stringToShare);
+        shareActionProvider.setShareIntent(shareIntent);*/
+
         return super.onCreateOptionsMenu(menu);
+
     }
+
 }

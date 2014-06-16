@@ -142,6 +142,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.home_activity_menu, menu);
 
+        // Search
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
