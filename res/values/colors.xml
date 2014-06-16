@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="actionbar_color">#ee4764</color>
+    <color name="actionbar_color">#4497c8</color>
+    <color name="actionbar_color1">#FD8385</color>
+    <color name="actionbar_color2">#F2C433</color>
+    <color name="actionbar_color3">#476277</color>
+
+    <integer-array name="gplus_colors">
+        <item>@color/actionbar_color</item>
+        <item>@color/actionbar_color1</item>
+        <item>@color/actionbar_color2</item>
+        <item>@color/actionbar_color3</item>
+    </integer-array>
 
 </resources>
