@@ -12,7 +12,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.example.avisreader.data.Newspaper;
 
-
 public class WebViewActivity extends ActionBarActivity {
 
     private WebView webView;
@@ -36,7 +35,8 @@ public class WebViewActivity extends ActionBarActivity {
             }
         });
 
-        Newspaper newspaper = getIntent().getParcelableExtra("url");
+        newspaper = getIntent().getParcelableExtra("url");
+        Log.d("APP", newspaper.toString());
         webView.loadUrl(newspaper.getUrl());
         getActionBar().setTitle(newspaper.getTitle());
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -55,8 +55,8 @@ public class WebViewActivity extends ActionBarActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private void refreshWebPage() {
-        webView.loadUrl(newspaper.getUrl());
+    private void refreshWebPage(String url) {
+        webView.loadUrl(url);
     }
 
     @Override
@@ -66,11 +66,9 @@ public class WebViewActivity extends ActionBarActivity {
                 finish();
                 return true;
             case R.id.action_refresh:
-                Log.d("APP", "REFRESH");
-                refreshWebPage();
+                refreshWebPage(webView.getUrl());
                 return true;
             case R.id.action_share:
-                Log.d("APP", "SHARE");
                 Log.d("APP", webView.getUrl());
                 return true;
             default:
