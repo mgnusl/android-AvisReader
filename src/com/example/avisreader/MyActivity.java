@@ -30,6 +30,7 @@ public class MyActivity extends ActionBarActivity {
     private ListView listView;
     private DatabaseHelper dbHelper;
     private MainListAdapter adapter;
+    private AvisReaderApplication globalApp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,25 +40,32 @@ public class MyActivity extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.listView);
 
         dbHelper = DatabaseHelper.getInstance(this);
-
-
+        globalApp = (AvisReaderApplication) getApplicationContext();
         newsPapersList = new ArrayList<Newspaper>();
 
-        // Fill newsPaperList with NewsPapers
-        List<String> tempList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.newspapers)));
-        for (String s : tempList) {
-            String[] temp = s.split(",");
-            int resID = getResources().getIdentifier(((String) temp[2].trim()), "drawable", MyActivity.this.getPackageName());
-            // If no valid icon was found
-            if (resID == 0)
-                resID = getResources().getIdentifier("no_icon", "drawable", MyActivity.this.getPackageName());
+        // If first time launch, fill newsPaperList with default Newspapers
+        Log.d("APP", "IS FIRST LAUNCH BEFORE IF: " + Boolean.toString(globalApp.isFirstLaunch()));
+        if (globalApp.isFirstLaunch()) {
+            List<String> tempList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.newspapers)));
+            for (String s : tempList) {
+                String[] temp = s.split(",");
+                int resID = getResources().getIdentifier(((String) temp[2].trim()), "drawable", MyActivity.this.getPackageName());
+                // If no valid icon was found
+                if (resID == 0)
+                    resID = getResources().getIdentifier("no_icon", "drawable", MyActivity.this.getPackageName());
 
-            Drawable icon = getResources().getDrawable(resID);
-            Newspaper np = new Newspaper(temp[1], temp[0], icon);
-            int id = dbHelper.addNewspaper(np);
-            np.setId(id);
-            newsPapersList.add(np);
+                Drawable icon = getResources().getDrawable(resID);
+                Newspaper np = new Newspaper(temp[1], temp[0], icon);
+                int id = dbHelper.addNewspaper(np);
+                np.setId(id);
+                newsPapersList.add(np);
+            }
+            globalApp.setIsFirstLaunch(false);
         }
+        else {
+            newsPapersList = dbHelper.getAllNewspapers();
+        }
+
 
         // Sort the array alphabetically
         Collections.sort(newsPapersList);
@@ -74,13 +82,8 @@ public class MyActivity extends ActionBarActivity {
         });
 
 
-        Log.d("APP", "GET" + dbHelper.getNewspaper(2).toString());
-
-        Log.d("APP", "UPDATE : " + dbHelper.updateNewspaper(newsPapersList.get(1)));
-        Log.d("APP", "DELETE : " + dbHelper.deleteNewspaper(newsPapersList.get(1)));
-
-        for(Newspaper np : dbHelper.getAllNewspapers())
-            Log.d("APP", np.toString());
+        Log.d("APP", "DATABASE SIZE " + dbHelper.getAllNewspapers().size());
+        Log.d("APP", "LIST SIZE " + newsPapersList.size());
 
     }
 
@@ -102,7 +105,7 @@ public class MyActivity extends ActionBarActivity {
 
                                 // Validate the url
                                 String url = urlEditText.getText().toString();
-                                if(!url.contains("http://")) {
+                                if (!url.contains("http://")) {
                                     StringBuilder sb = new StringBuilder(url);
                                     sb.insert(0, "http://");
                                     url = sb.toString();

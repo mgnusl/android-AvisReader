@@ -68,7 +68,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         int rowId = safeLongToInt(db.insert(TABLE_NEWSPAPER, null, values));
         db.close();
-
         return rowId;
 
     }
