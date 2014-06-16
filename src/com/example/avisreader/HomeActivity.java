@@ -1,11 +1,16 @@
 package com.example.avisreader;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
@@ -20,7 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
 
     private List<Newspaper> newsPapersList;
     private ListView listView;
@@ -57,8 +62,7 @@ public class HomeActivity extends ActionBarActivity {
                 newsPapersList.add(np);
             }
             globalApp.setIsFirstLaunch(false);
-        }
-        else {
+        } else {
             newsPapersList = dbHelper.getAllNewspapers();
         }
 
@@ -68,6 +72,7 @@ public class HomeActivity extends ActionBarActivity {
 
         adapter = new MainListAdapter(this, R.layout.newspaper_rowitem, newsPapersList);
         listView.setAdapter(adapter);
+        listView.setTextFilterEnabled(true);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -132,27 +137,48 @@ public class HomeActivity extends ActionBarActivity {
         dialog.show();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.home_activity_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(this);
+
         return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                Log.d("APP", "SØK");
                 return true;
             case R.id.action_add:
-                Log.d("APP", "ADD");
                 showAddPopupDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        if (TextUtils.isEmpty(s)) {
+            listView.clearTextFilter();
+        } else {
+            listView.setFilterText(s.toString());
+        }
+
+        return true;
     }
 }
