@@ -61,14 +61,11 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
                 R.drawable.ic_action_rating_not_important);
 
         // Find icon
-        int resID = context.getApplicationContext().getResources().getIdentifier(newspaper.getIcon(), "drawable",
+        int resID = context.getApplicationContext().getResources().getIdentifier(newspaper.getIcon().trim(), "drawable",
                 context.getApplicationContext().getPackageName());
         // If no valid icon was found
-        Log.d("APP", "RES ID FOR " + newspaper.getIcon() + ": " + resID);
-        Log.d("APP", context.getApplicationContext().getPackageName());
         if (resID == 0) {
             resID = context.getResources().getIdentifier("no_icon", "drawable", context.getApplicationContext().getPackageName());
-            Log.d("APP", "RES ID FOR " + newspaper.getIcon() + " noicon: " + resID);
 
         }
 
