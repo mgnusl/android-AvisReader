@@ -30,6 +30,12 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
         this.context = context;
         dbHelper = DatabaseHelper.getInstance(context.getApplicationContext());
         newsPaperList = objects;
+
+        // Initial sort of the dataset and notify the view of updates
+        List<Newspaper> tempList = sortDataset();
+        newsPaperList.clear();
+        newsPaperList.addAll(tempList);
+        notifyDataSetChanged();
     }
 
     static class ViewHolder {
@@ -67,7 +73,8 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
                 context.getApplicationContext().getPackageName());
         // If no valid icon was found
         if (resID == 0) {
-            resID = context.getResources().getIdentifier("no_icon", "drawable", context.getApplicationContext().getPackageName());
+            resID = context.getResources().getIdentifier("ic_action_collections_view_as_list",
+                    "drawable", context.getApplicationContext().getPackageName());
         }
 
         Drawable icon = context.getResources().getDrawable(resID);
@@ -99,6 +106,7 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
             }
         });
 
+
         return convertView;
 
     }
@@ -116,20 +124,11 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
         }
 
         Collections.sort(favorites);
-        Log.d("APP", "FAV SIZE: " + favorites.size());
-
         Collections.sort(nonFavorites);
 
-        Log.d("APP", "NONFAV SIZE: " + nonFavorites.size());
-
         favorites.addAll(nonFavorites);
-        Log.d("APP", "TILSAMMEN: " + favorites.size());
 
-        for (Newspaper np : favorites)
-            Log.d("APP", np.getTitle());
         notifyDataSetChanged();
-
-        Log.d("APP", "___________");
 
         return favorites;
     }
