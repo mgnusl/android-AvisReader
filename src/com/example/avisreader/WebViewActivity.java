@@ -3,21 +3,17 @@ package com.example.avisreader;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.*;
-import android.view.animation.DecelerateInterpolator;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.*;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.example.avisreader.data.Newspaper;
-import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
 
 public class WebViewActivity extends ActionBarActivity {
 
@@ -32,6 +28,8 @@ public class WebViewActivity extends ActionBarActivity {
         setContentView(R.layout.webview);
 
         webView = (WebView) findViewById(R.id.webview);
+
+        WebIconDatabase.getInstance().open(getDir("icons", MODE_PRIVATE).getPath());
 
 
         webView.getSettings().setJavaScriptEnabled(true);
@@ -55,6 +53,25 @@ public class WebViewActivity extends ActionBarActivity {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress == 100)
                     mProgressBar1.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                getActionBar().setTitle(title);
+                super.onReceivedTitle(view, title);
+                getActionBar().setIcon(new BitmapDrawable(getResources(), webView.getFavicon()));
+
+            }
+
+            @Override
+            public void onReceivedIcon(WebView view, Bitmap icon) {
+                BitmapDrawable iconDrawable =
+                        new BitmapDrawable(getResources(), icon);
+
+                getActionBar().setIcon(iconDrawable);
+                getSupportActionBar().setIcon(iconDrawable);
+                super.onReceivedIcon(view, icon);
+
             }
         });
 
