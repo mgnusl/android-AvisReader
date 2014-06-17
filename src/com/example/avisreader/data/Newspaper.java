@@ -13,23 +13,31 @@ public class Newspaper implements Parcelable, Comparable {
     private int id;
     private String icon;
     private boolean isFavorite;
+    private Bitmap iconBitmap;
 
     // Constructor used when creating new Newspapers from resources
     public Newspaper(String title, String url, String icon) {
         this.title = title;
         this.url = url;
         this.icon = icon;
-        Log.d("APP", icon);
     }
 
     // Constructor used when creating new Newspapers from database
+    public Newspaper(int id, String title, String url, boolean isFavorite, String icon, Bitmap ibm) {
+        this.title = title;
+        this.url = url;
+        this.id = id;
+        this.isFavorite = isFavorite;
+        this.icon = icon;
+        this.iconBitmap = ibm;
+    }
+
     public Newspaper(int id, String title, String url, boolean isFavorite, String icon) {
         this.title = title;
         this.url = url;
         this.id = id;
         this.isFavorite = isFavorite;
         this.icon = icon;
-        Log.d("APP", icon);
     }
 
     public Newspaper() {}
@@ -74,13 +82,23 @@ public class Newspaper implements Parcelable, Comparable {
         this.id = id;
     }
 
+    public Bitmap getIconBitmap() {
+        return iconBitmap;
+    }
+
+    public void setIconBitmap(Bitmap iconBitmap) {
+        this.iconBitmap = iconBitmap;
+    }
+
     @Override
     public String toString() {
-        return "NewsPaper{" +
+        return "Newspaper{" +
                 "title='" + title + '\'' +
                 ", url='" + url + '\'' +
-                ", icon=" + icon +
+                ", id=" + id +
+                ", icon='" + icon + '\'' +
                 ", isFavorite=" + isFavorite +
+                ", iconBitmap=" + iconBitmap +
                 '}';
     }
 
@@ -102,18 +120,37 @@ public class Newspaper implements Parcelable, Comparable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(title);
         dest.writeString(url);
         dest.writeByte((byte) (isFavorite ? 1 : 0));
         dest.writeString(icon);
-        //dest.writeValue(((BitmapDrawable) icon).getBitmap());
+        //dest.writeValue(((BitmapDrawable) iconBitmap).getBitmap());
+        if(iconBitmap != null) {
+            //iconBitmap.writeToParcel(dest, 0);
+            dest.writeValue(iconBitmap);
+        }
+
     }
 
     public Newspaper(Parcel in) {
+        id = in.readInt();
         title = in.readString();
         url = in.readString();
         isFavorite = in.readByte() != 0;
         icon = in.readString();
+
+        Parcel parcel = Parcel.obtain();
+        Bitmap sourceBitmap;
+        Bitmap destinationBitmap;
+        sourceBitmap = Bitmap.createBitmap(200, 400, Bitmap.Config.ARGB_8888);
+
+        sourceBitmap.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+
+        destinationBitmap = Bitmap.CREATOR.createFromParcel(parcel);
+        iconBitmap = destinationBitmap;
+        //iconBitmap = in.readParcelable(Bitmap.class.getClassLoader());
         //icon = new BitmapDrawable((Bitmap) in.readValue(Bitmap.class.getClassLoader()));
     }
 

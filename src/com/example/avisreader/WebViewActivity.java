@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
@@ -14,12 +15,14 @@ import android.webkit.*;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.example.avisreader.data.Newspaper;
+import com.example.avisreader.database.DatabaseHelper;
 
 public class WebViewActivity extends ActionBarActivity {
 
     private WebView webView;
     private Newspaper newspaper;
     private ShareActionProvider shareActionProvider;
+    private DatabaseHelper dbHelper;
 
 
     @Override
@@ -31,6 +34,12 @@ public class WebViewActivity extends ActionBarActivity {
 
         WebIconDatabase.getInstance().open(getDir("icons", MODE_PRIVATE).getPath());
 
+        dbHelper = DatabaseHelper.getInstance(this);
+
+        newspaper = getIntent().getParcelableExtra("url");
+        webView.loadUrl(newspaper.getUrl());
+        getActionBar().setTitle(newspaper.getTitle());
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         webView.getSettings().setJavaScriptEnabled(true);
 
@@ -65,21 +74,18 @@ public class WebViewActivity extends ActionBarActivity {
 
             @Override
             public void onReceivedIcon(WebView view, Bitmap icon) {
-                BitmapDrawable iconDrawable =
+                BitmapDrawable iconDrawable  =
                         new BitmapDrawable(getResources(), icon);
 
                 getActionBar().setIcon(iconDrawable);
                 getSupportActionBar().setIcon(iconDrawable);
+                newspaper.setIconBitmap(icon);
+                dbHelper.updateNewspaper(newspaper);
                 super.onReceivedIcon(view, icon);
 
             }
         });
 
-
-        newspaper = getIntent().getParcelableExtra("url");
-        webView.loadUrl(newspaper.getUrl());
-        getActionBar().setTitle(newspaper.getTitle());
-        getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

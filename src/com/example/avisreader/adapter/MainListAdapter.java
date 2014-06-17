@@ -70,7 +70,13 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
         }
 
         Drawable icon = context.getResources().getDrawable(resID);
-        holder.iconImageView.setImageDrawable(icon);
+
+        if(newspaper.getIconBitmap() == null) {
+            holder.iconImageView.setImageDrawable(icon);
+        }
+        else {
+            holder.iconImageView.setImageBitmap(newspaper.getIconBitmap());
+        }
 
         holder.favoriteImageView.setOnClickListener(new View.OnClickListener() {
             @Override

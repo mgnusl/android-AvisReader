@@ -5,9 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import com.example.avisreader.data.Newspaper;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +27,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_URL = "url";
     private static final String KEY_ISFAVORITE = "favorite";
     private static final String KEY_ICON = "icon";
+    private static final String KEY_ICON_BLOB = "icon_blob";
 
-    private static final String[] COLUMNS_NEWSPAPER = {KEY_ID, KEY_TITLE, KEY_URL, KEY_ISFAVORITE, KEY_ICON};
+    private static final String[] COLUMNS_NEWSPAPER = {KEY_ID, KEY_TITLE, KEY_URL, KEY_ISFAVORITE, KEY_ICON, KEY_ICON_BLOB};
 
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,7 +52,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 KEY_TITLE + " TEXT, " +
                 KEY_URL + " TEXT, " +
                 KEY_ISFAVORITE + " INTEGER, " +
-                KEY_ICON + " TEXT )";
+                KEY_ICON + " TEXT, " +
+                KEY_ICON_BLOB + " BLOB )";
 
         db.execSQL(CREATE_NEWSPAPER_TABLE);
 
@@ -69,6 +74,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_ISFAVORITE, (np.isFavorite() ? 1 : 0));
         values.put(KEY_ICON, np.getIcon());
 
+        // Icon bitmap
+        if (np.getIconBitmap() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            np.getIconBitmap().compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] imageByteArray = stream.toByteArray();
+            values.put(KEY_ICON_BLOB, imageByteArray);
+        }
+
         int rowId = safeLongToInt(db.insert(TABLE_NEWSPAPER, null, values));
         db.close();
         return rowId;
@@ -77,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean deleteNewspaper(Newspaper np) {
         SQLiteDatabase db = this.getWritableDatabase();
-        boolean success = db.delete(TABLE_NEWSPAPER, KEY_ID + " = ?", new String[] {String.valueOf(np.getId()) } ) > 0;
+        boolean success = db.delete(TABLE_NEWSPAPER, KEY_ID + " = ?", new String[]{String.valueOf(np.getId())}) > 0;
         db.close();
         return success;
     }
@@ -90,6 +103,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_URL, np.getUrl());
         values.put(KEY_ISFAVORITE, (np.isFavorite() ? 1 : 0));
         values.put(KEY_ICON, np.getIcon());
+
+        // Icon bitmap
+        if(np.getIconBitmap() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            np.getIconBitmap().compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] imageByteArray = stream.toByteArray();
+            values.put(KEY_ICON_BLOB, imageByteArray);
+        }
+
 
         return db.update(TABLE_NEWSPAPER, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(np.getId())});
@@ -110,8 +132,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
 
-            np = new Newspaper(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2),
-                    (Integer.parseInt(cursor.getString(3)) == 1 ? true : false), cursor.getString(4));
+            if(!(cursor.getBlob(5) == null)) {
+                Bitmap bm = convertByteArrayToBitmap(cursor.getBlob(5));
+                np = new Newspaper(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2),
+                        (Integer.parseInt(cursor.getString(3)) == 1 ? true : false), cursor.getString(4), bm);
+            }
+            else {
+                np = new Newspaper(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2),
+                        (Integer.parseInt(cursor.getString(3)) == 1 ? true : false), cursor.getString(4));
+            }
+
+
 
             cursor.moveToNext();
         }
@@ -128,7 +159,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         ArrayList<Newspaper> newsPaperList = new ArrayList<Newspaper>();
 
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 Newspaper np = new Newspaper();
                 np.setId(Integer.parseInt(cursor.getString(0)));
@@ -137,8 +168,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 np.setFavorite((Integer.parseInt(cursor.getString(3)) == 1) ? true : false);
                 np.setIcon(cursor.getString(4));
 
+                if (cursor.getBlob(5) != null) {
+                    Bitmap bm = convertByteArrayToBitmap(cursor.getBlob(5));
+                    np.setIconBitmap(bm);
+                }
+
                 newsPaperList.add(np);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         return newsPaperList;
@@ -151,5 +187,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     (l + " cannot be cast to int without changing its value.");
         }
         return (int) l;
+    }
+
+    public static Bitmap convertByteArrayToBitmap(byte[] byteArrayToBeCOnvertedIntoBitMap) {
+        Bitmap bitMapImage = BitmapFactory.decodeByteArray(
+                byteArrayToBeCOnvertedIntoBitMap, 0,
+                byteArrayToBeCOnvertedIntoBitMap.length);
+        return bitMapImage;
     }
 }

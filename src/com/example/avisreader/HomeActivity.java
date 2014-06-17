@@ -59,6 +59,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             newsPapersList = dbHelper.getAllNewspapers();
         }
 
+
         // Sort the array alphabetically
         Collections.sort(newsPapersList);
         adapter = new MainListAdapter(this, R.layout.newspaper_rowitem, newsPapersList);
