@@ -60,8 +60,6 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         }
 
 
-        // Sort the array alphabetically
-        Collections.sort(newsPapersList);
         adapter = new MainListAdapter(this, R.layout.newspaper_rowitem, newsPapersList);
         listView.setAdapter(adapter);
         listView.setTextFilterEnabled(true);
@@ -75,6 +73,8 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         });
 
     }
+
+
 
     private void showAddPopupDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

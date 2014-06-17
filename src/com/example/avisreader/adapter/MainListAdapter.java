@@ -2,7 +2,6 @@ package com.example.avisreader.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,9 @@ import android.widget.*;
 import com.example.avisreader.R;
 import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
-import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainListAdapter extends ArrayAdapter<Newspaper> {
@@ -21,6 +21,7 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
     private int resource;
     private Context context;
     private DatabaseHelper dbHelper;
+    private List<Newspaper> newsPaperList;
 
     public MainListAdapter(Context context, int resource, List<Newspaper> objects) {
         super(context, resource, objects);
@@ -28,6 +29,7 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
         this.resource = resource;
         this.context = context;
         dbHelper = DatabaseHelper.getInstance(context.getApplicationContext());
+        newsPaperList = objects;
     }
 
     static class ViewHolder {
@@ -66,15 +68,13 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
         // If no valid icon was found
         if (resID == 0) {
             resID = context.getResources().getIdentifier("no_icon", "drawable", context.getApplicationContext().getPackageName());
-
         }
 
         Drawable icon = context.getResources().getDrawable(resID);
 
-        if(newspaper.getIconBitmap() == null) {
+        if (newspaper.getIconBitmap() == null) {
             holder.iconImageView.setImageDrawable(icon);
-        }
-        else {
+        } else {
             holder.iconImageView.setImageBitmap(newspaper.getIconBitmap());
         }
 
@@ -90,10 +90,47 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
                     newspaper.setFavorite(true);
                     dbHelper.updateNewspaper(newspaper);
                 }
+
+                // Sort the dataset and notify the view of updates
+                List<Newspaper> tempList = sortDataset();
+                newsPaperList.clear();
+                newsPaperList.addAll(tempList);
+                notifyDataSetChanged();
             }
         });
 
         return convertView;
 
+    }
+
+    private List<Newspaper> sortDataset() {
+
+        List<Newspaper> nonFavorites = new ArrayList<Newspaper>();
+        List<Newspaper> favorites = new ArrayList<Newspaper>();
+
+        for (Newspaper np : newsPaperList) {
+            if (np.isFavorite())
+                favorites.add(np);
+            else
+                nonFavorites.add(np);
+        }
+
+        Collections.sort(favorites);
+        Log.d("APP", "FAV SIZE: " + favorites.size());
+
+        Collections.sort(nonFavorites);
+
+        Log.d("APP", "NONFAV SIZE: " + nonFavorites.size());
+
+        favorites.addAll(nonFavorites);
+        Log.d("APP", "TILSAMMEN: " + favorites.size());
+
+        for (Newspaper np : favorites)
+            Log.d("APP", np.getTitle());
+        notifyDataSetChanged();
+
+        Log.d("APP", "___________");
+
+        return favorites;
     }
 }
