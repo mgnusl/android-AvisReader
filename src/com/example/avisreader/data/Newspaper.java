@@ -5,27 +5,31 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class Newspaper implements Parcelable, Comparable {
 
     private String title, url;
     private int id;
-    private Drawable icon;
+    private String icon;
     private boolean isFavorite;
 
-    // Standard constructor. This should normally be used
-    public Newspaper(String title, String url, Drawable icon) {
+    // Constructor used when creating new Newspapers from resources
+    public Newspaper(String title, String url, String icon) {
         this.title = title;
         this.url = url;
         this.icon = icon;
+        Log.d("APP", icon);
     }
 
-    // Constructor used when fetching custom Newspapers from database
-    public Newspaper(int id, String title, String url, boolean isFavorite) {
+    // Constructor used when creating new Newspapers from database
+    public Newspaper(int id, String title, String url, boolean isFavorite, String icon) {
         this.title = title;
         this.url = url;
         this.id = id;
         this.isFavorite = isFavorite;
+        this.icon = icon;
+        Log.d("APP", icon);
     }
 
     public Newspaper() {}
@@ -46,11 +50,11 @@ public class Newspaper implements Parcelable, Comparable {
         this.url = url;
     }
 
-    public Drawable getIcon() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(Drawable icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
@@ -101,6 +105,7 @@ public class Newspaper implements Parcelable, Comparable {
         dest.writeString(title);
         dest.writeString(url);
         dest.writeByte((byte) (isFavorite ? 1 : 0));
+        dest.writeString(icon);
         //dest.writeValue(((BitmapDrawable) icon).getBitmap());
     }
 
@@ -108,6 +113,7 @@ public class Newspaper implements Parcelable, Comparable {
         title = in.readString();
         url = in.readString();
         isFavorite = in.readByte() != 0;
+        icon = in.readString();
         //icon = new BitmapDrawable((Bitmap) in.readValue(Bitmap.class.getClassLoader()));
     }
 

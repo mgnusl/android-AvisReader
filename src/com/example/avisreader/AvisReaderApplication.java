@@ -17,6 +17,7 @@ public class AvisReaderApplication extends Application {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         boolean isFirstLaunch = settings.getBoolean("isFirstLaunch", true);
         setIsFirstLaunch(isFirstLaunch);
+
     }
 
     public boolean isFirstLaunch() {

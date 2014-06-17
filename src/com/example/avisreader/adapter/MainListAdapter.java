@@ -1,7 +1,9 @@
 package com.example.avisreader.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,8 +60,20 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
         holder.favoriteImageView.setImageResource(newspaper.isFavorite() ? R.drawable.ic_action_rating_important :
                 R.drawable.ic_action_rating_not_important);
 
-        holder.iconImageView.setImageDrawable(newspaper.getIcon());
+        // Find icon
+        int resID = context.getApplicationContext().getResources().getIdentifier(newspaper.getIcon(), "drawable",
+                context.getApplicationContext().getPackageName());
+        // If no valid icon was found
+        Log.d("APP", "RES ID FOR " + newspaper.getIcon() + ": " + resID);
+        Log.d("APP", context.getApplicationContext().getPackageName());
+        if (resID == 0) {
+            resID = context.getResources().getIdentifier("no_icon", "drawable", context.getApplicationContext().getPackageName());
+            Log.d("APP", "RES ID FOR " + newspaper.getIcon() + " noicon: " + resID);
 
+        }
+
+        Drawable icon = context.getResources().getDrawable(resID);
+        holder.iconImageView.setImageDrawable(icon);
 
         holder.favoriteImageView.setOnClickListener(new View.OnClickListener() {
             @Override

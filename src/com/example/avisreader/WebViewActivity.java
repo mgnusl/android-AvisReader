@@ -53,7 +53,6 @@ public class WebViewActivity extends ActionBarActivity {
 
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
-                Log.d("APP", "PROGRESS " + progress);
                 if (progress == 100)
                     mProgressBar1.setVisibility(View.GONE);
             }

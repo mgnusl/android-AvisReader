@@ -45,18 +45,11 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         newsPapersList = new ArrayList<Newspaper>();
 
         // If first time launch, fill newsPaperList with default Newspapers
-        Log.d("APP", "IS FIRST LAUNCH BEFORE IF: " + Boolean.toString(globalApp.isFirstLaunch()));
         if (globalApp.isFirstLaunch()) {
             List<String> tempList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.newspapers)));
             for (String s : tempList) {
                 String[] temp = s.split(",");
-                int resID = getResources().getIdentifier(((String) temp[2].trim()), "drawable", HomeActivity.this.getPackageName());
-                // If no valid icon was found
-                if (resID == 0)
-                    resID = getResources().getIdentifier("no_icon", "drawable", HomeActivity.this.getPackageName());
-
-                Drawable icon = getResources().getDrawable(resID);
-                Newspaper np = new Newspaper(temp[1], temp[0], icon);
+                Newspaper np = new Newspaper(temp[1], temp[0], temp[2]);
                 int id = dbHelper.addNewspaper(np);
                 np.setId(id);
                 newsPapersList.add(np);
@@ -66,10 +59,8 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             newsPapersList = dbHelper.getAllNewspapers();
         }
 
-
         // Sort the array alphabetically
         Collections.sort(newsPapersList);
-
         adapter = new MainListAdapter(this, R.layout.newspaper_rowitem, newsPapersList);
         listView.setAdapter(adapter);
         listView.setTextFilterEnabled(true);
@@ -81,10 +72,6 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
                         newsPapersList.get(position)));
             }
         });
-
-
-        Log.d("APP", "DATABASE SIZE " + dbHelper.getAllNewspapers().size());
-        Log.d("APP", "LIST SIZE " + newsPapersList.size());
 
     }
 
