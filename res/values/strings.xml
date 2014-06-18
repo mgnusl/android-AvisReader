@@ -18,15 +18,19 @@
     <string name="pref_text_size_summary">Size of text inside webpages</string>
 
     <string-array name="textsizes_entries">
+        <item name="60">Extra small</item>
         <item name="80">Small</item>
         <item name="100">Default</item>
         <item name="150">Large</item>
+        <item name="170">Extra large</item>
     </string-array>
 
     <string-array name="textsizes_values">
+        <item name="60">60</item>
         <item name="80">80</item>
         <item name="100">100</item>
         <item name="150">150</item>
+        <item name="170">170</item>
     </string-array>
 
     

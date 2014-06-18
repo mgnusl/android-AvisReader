@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -38,25 +39,21 @@ public class WebViewActivity extends ActionBarActivity {
         setContentView(R.layout.webview);
 
         webView = (WebView) findViewById(R.id.webview);
-
+        dbHelper = DatabaseHelper.getInstance(this);
         WebIconDatabase.getInstance().open(getDir("icons", MODE_PRIVATE).getPath());
 
-        dbHelper = DatabaseHelper.getInstance(this);
-
-        newspaper = getIntent().getParcelableExtra("url");
-        webView.loadUrl(newspaper.getUrl());
-        getActionBar().setTitle(newspaper.getTitle());
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
+        // Settings
         WebSettings settings = webView.getSettings();
-
         webView.getSettings().setJavaScriptEnabled(true);
-        settings.setTextZoom(100);
 
         // Set font size from preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Log.d("APP", prefs.getString(SettingsActivity.KEY_FONT_SIZE, "TOM"));
-
+        int fontSize = 100;
+        String fontSizeString = prefs.getString(SettingsActivity.KEY_FONT_SIZE, "empty");
+        if(!fontSizeString.equals("empty")) {
+            fontSize = Integer.parseInt(fontSizeString);
+        }
+        settings.setTextZoom(fontSize);
 
 
         webView.setWebViewClient(new WebViewClient() {
@@ -73,7 +70,6 @@ public class WebViewActivity extends ActionBarActivity {
 
         final ProgressBar progressBar1;
         progressBar1 = (ProgressBar) findViewById(R.id.google_now);
-
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress == 100)
@@ -119,6 +115,13 @@ public class WebViewActivity extends ActionBarActivity {
             }
         });
 
+        // Load webpage
+        newspaper = getIntent().getParcelableExtra("url");
+        webView.loadUrl(newspaper.getUrl());
+
+        // Actionbar
+        getActionBar().setTitle(newspaper.getTitle());
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
