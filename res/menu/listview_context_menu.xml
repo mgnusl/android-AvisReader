@@ -3,10 +3,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_share"
-        android:icon="@drawable/ic_action_social_share"
-        android:title="@string/share"
-
-        />
+        android:id="@+id/ctxmenu_delete"
+        android:title="@string/delete"/>
 
 </menu>

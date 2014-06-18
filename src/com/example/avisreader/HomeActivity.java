@@ -10,6 +10,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -70,7 +71,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             }
         });
 
-        //registerForContextMenu(listView);
+        registerForContextMenu(listView);
 
     }
 
@@ -168,17 +169,6 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         return true;
     }
 
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        if(v.getId() == R.id.listView) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.listview_context_menu, menu);
-        }
-    }
-
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -190,8 +180,30 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         adapter.notifyDataSetChanged();
     }
 
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        if(v.getId() == R.id.listView) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.listview_context_menu, menu);
+        }
+    }
+
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        return super.onContextItemSelected(item);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.ctxmenu_delete:
+                Log.d("APP", "DELETE " + newsPaperList.get(info.position).getTitle());
+                dbHelper.deleteNewspaper(newsPaperList.get(info.position));
+                newsPaperList.remove(info.id);
+                adapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }
