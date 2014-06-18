@@ -92,11 +92,11 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
                 if (newspaper.isFavorite()) {
                     holder.favoriteImageView.setImageResource(R.drawable.ic_action_rating_not_important);
                     newspaper.setFavorite(false);
-                    dbHelper.updateNewspaper(newspaper);
+                    dbHelper.updateNewspaperFavorite(newspaper);
                 } else {
                     holder.favoriteImageView.setImageResource(R.drawable.ic_action_rating_important);
                     newspaper.setFavorite(true);
-                    dbHelper.updateNewspaper(newspaper);
+                    dbHelper.updateNewspaperFavorite(newspaper);
                 }
 
                 // Sort the dataset and notify the view of updates

@@ -118,6 +118,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Method for updating the "favorite" field of a row. Use this instead of "updateNewspaper" when
+     * only the "favorite" field is updated to avoid losing icon quality with repeated writes of a row.
+     * @param np
+     * @return Whether or not a row was updated
+     */
+    public boolean updateNewspaperFavorite(Newspaper np) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        if(np.isFavorite()) {
+            values.put(KEY_ISFAVORITE, 1);
+        }
+        else if(!np.isFavorite()) {
+            values.put(KEY_ISFAVORITE, 0);
+        }
+
+        return db.update(TABLE_NEWSPAPER, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(np.getId())}) > 0;
+    }
+
 
     public Newspaper getNewspaper(int id) {
 
