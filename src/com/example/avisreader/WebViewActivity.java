@@ -17,6 +17,10 @@ import android.widget.Toast;
 import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 public class WebViewActivity extends ActionBarActivity {
 
     private WebView webView;
@@ -55,13 +59,13 @@ public class WebViewActivity extends ActionBarActivity {
             }
         });
 
-        final ProgressBar mProgressBar1;
-        mProgressBar1 = (ProgressBar) findViewById(R.id.google_now);
+        final ProgressBar progressBar1;
+        progressBar1 = (ProgressBar) findViewById(R.id.google_now);
 
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress == 100)
-                    mProgressBar1.setVisibility(View.GONE);
+                    progressBar1.setVisibility(View.GONE);
             }
 
             @Override
@@ -74,13 +78,32 @@ public class WebViewActivity extends ActionBarActivity {
 
             @Override
             public void onReceivedIcon(WebView view, Bitmap icon) {
-                BitmapDrawable iconDrawable  =
-                        new BitmapDrawable(getResources(), icon);
-
+                BitmapDrawable iconDrawable = new BitmapDrawable(getResources(), icon);
                 getActionBar().setIcon(iconDrawable);
                 getSupportActionBar().setIcon(iconDrawable);
-                newspaper.setIconBitmap(icon);
-                dbHelper.updateNewspaper(newspaper);
+
+                // Check if the current website url is part of the original url
+                try {
+                    URI uri = new URI(webView.getUrl());
+                    String uriHost = uri.getHost();
+
+                    // Strip the url
+                    if (uriHost.contains("www."))
+                        uriHost = uriHost.replace("www.", "");
+                    Log.d("APP", "newspaperuri " + newspaper.getUrl() + " " + "webview url " + uriHost);
+                    if (newspaper.getUrl().contains(uriHost)) {
+                        // current url is part of the original url
+                        newspaper.setIconBitmap(icon);
+                        dbHelper.updateNewspaper(newspaper);
+                        Log.d("APP", "replacing icon");
+                    } else
+                        Log.d("APP", "not replacing icon");
+
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                    Log.d("APP", "something happened when checking url...");
+                }
+
                 super.onReceivedIcon(view, icon);
 
             }
