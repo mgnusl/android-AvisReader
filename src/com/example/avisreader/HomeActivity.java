@@ -5,13 +5,11 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -19,15 +17,15 @@ import android.widget.ListView;
 import com.example.avisreader.adapter.MainListAdapter;
 import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
+import com.example.avisreader.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class HomeActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
 
-    private List<Newspaper> newsPapersList;
+    private List<Newspaper> newsPaperList;
     private ListView listView;
     private DatabaseHelper dbHelper;
     private MainListAdapter adapter;
@@ -42,7 +40,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
 
         dbHelper = DatabaseHelper.getInstance(this);
         globalApp = (AvisReaderApplication) getApplicationContext();
-        newsPapersList = new ArrayList<Newspaper>();
+        newsPaperList = new ArrayList<Newspaper>();
 
         // If first time launch, fill newsPaperList with default Newspapers
         if (globalApp.isFirstLaunch()) {
@@ -52,15 +50,15 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
                 Newspaper np = new Newspaper(temp[1], temp[0], temp[2]);
                 int id = dbHelper.addNewspaper(np);
                 np.setId(id);
-                newsPapersList.add(np);
+                newsPaperList.add(np);
             }
             globalApp.setIsFirstLaunch(false);
         } else {
-            newsPapersList = dbHelper.getAllNewspapers();
+            newsPaperList = dbHelper.getAllNewspapers();
         }
 
 
-        adapter = new MainListAdapter(this, R.layout.newspaper_rowitem, newsPapersList);
+        adapter = new MainListAdapter(this, R.layout.newspaper_rowitem, newsPaperList);
         listView.setAdapter(adapter);
         listView.setTextFilterEnabled(true);
 
@@ -68,12 +66,13 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 startActivity(new Intent(HomeActivity.this, WebViewActivity.class).putExtra("url",
-                        newsPapersList.get(position)));
+                        newsPaperList.get(position)));
             }
         });
 
-    }
+        //registerForContextMenu(listView);
 
+    }
 
 
     private void showAddPopupDialog() {
@@ -100,16 +99,14 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
                                     url = sb.toString();
                                 }
 
-                                Log.d("APP", url);
-
                                 Newspaper np = new Newspaper(
                                         titleEditText.getText().toString(),
                                         url,
-                                        null
+                                        ""
                                 );
                                 int id = dbHelper.addNewspaper(np);
                                 np.setId(id);
-                                newsPapersList.add(np);
+                                newsPaperList.add(np);
                                 adapter.notifyDataSetChanged();
                             }
                         })
@@ -169,5 +166,32 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         }
 
         return true;
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        if(v.getId() == R.id.listView) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.listview_context_menu, menu);
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        // Refresh the list (may have been downloaded new favicons)
+        List<Newspaper> tempList = Utils.sortDataset(dbHelper.getAllNewspapers());
+        newsPaperList.clear();
+        newsPaperList.addAll(tempList);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        return super.onContextItemSelected(item);
     }
 }

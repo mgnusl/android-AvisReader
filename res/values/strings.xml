@@ -9,5 +9,6 @@
     <string name="cancel">Cancel</string>
     <string name="url">url</string>
     <string name="title">title</string>
-    <string name="share_this">Share this</string>
+    <string name="share_this">Share via</string>
+    <string name="delete">Delete</string>
 </resources>

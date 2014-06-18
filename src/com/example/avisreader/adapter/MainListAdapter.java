@@ -10,6 +10,7 @@ import android.widget.*;
 import com.example.avisreader.R;
 import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
+import com.example.avisreader.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +33,7 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
         newsPaperList = objects;
 
         // Initial sort of the dataset and notify the view of updates
-        List<Newspaper> tempList = sortDataset();
+        List<Newspaper> tempList = Utils.sortDataset(dbHelper.getAllNewspapers());
         newsPaperList.clear();
         newsPaperList.addAll(tempList);
         notifyDataSetChanged();
@@ -99,7 +100,7 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
                 }
 
                 // Sort the dataset and notify the view of updates
-                List<Newspaper> tempList = sortDataset();
+                List<Newspaper> tempList = Utils.sortDataset(dbHelper.getAllNewspapers());
                 newsPaperList.clear();
                 newsPaperList.addAll(tempList);
                 notifyDataSetChanged();
@@ -132,4 +133,8 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
 
         return favorites;
     }
+
+
+
+
 }
