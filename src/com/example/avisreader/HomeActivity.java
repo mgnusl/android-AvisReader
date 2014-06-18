@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import com.example.avisreader.adapter.MainListAdapter;
 import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
+import com.example.avisreader.preferences.SettingsActivity;
 import com.example.avisreader.utils.Utils;
 
 import java.util.ArrayList;
@@ -36,6 +38,9 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        // Setup preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         listView = (ListView) findViewById(R.id.listView);
 
@@ -147,6 +152,8 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             case R.id.action_add:
                 showAddPopupDialog();
                 return true;
+            case R.id.action_settings:
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
 

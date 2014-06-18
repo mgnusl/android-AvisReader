@@ -3,9 +3,11 @@ package com.example.avisreader;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
@@ -16,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
+import com.example.avisreader.preferences.SettingsActivity;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -45,7 +48,16 @@ public class WebViewActivity extends ActionBarActivity {
         getActionBar().setTitle(newspaper.getTitle());
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
+        WebSettings settings = webView.getSettings();
+
         webView.getSettings().setJavaScriptEnabled(true);
+        settings.setTextZoom(100);
+
+        // Set font size from preferences
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Log.d("APP", prefs.getString(SettingsActivity.KEY_FONT_SIZE, "TOM"));
+
+
 
         webView.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -90,14 +102,12 @@ public class WebViewActivity extends ActionBarActivity {
                     // Strip the url
                     if (uriHost.contains("www."))
                         uriHost = uriHost.replace("www.", "");
-                    Log.d("APP", "newspaperuri " + newspaper.getUrl() + " " + "webview url " + uriHost);
+
                     if (newspaper.getUrl().contains(uriHost)) {
                         // current url is part of the original url
                         newspaper.setIconBitmap(icon);
                         dbHelper.updateNewspaper(newspaper);
-                        Log.d("APP", "replacing icon");
-                    } else
-                        Log.d("APP", "not replacing icon");
+                    }
 
                 } catch (URISyntaxException e) {
                     e.printStackTrace();

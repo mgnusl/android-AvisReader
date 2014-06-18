@@ -11,4 +11,23 @@
     <string name="title">title</string>
     <string name="share_this">Share via</string>
     <string name="delete">Delete</string>
+    <string name="settings">Settings</string>
+    
+    <!-- Preferences -->
+    <string name="pref_text_size">Text size</string>
+    <string name="pref_text_size_summary">Size of text inside webpages</string>
+
+    <string-array name="textsizes_entries">
+        <item name="80">Small</item>
+        <item name="100">Default</item>
+        <item name="150">Large</item>
+    </string-array>
+
+    <string-array name="textsizes_values">
+        <item name="80">80</item>
+        <item name="100">100</item>
+        <item name="150">150</item>
+    </string-array>
+
+    
 </resources>
