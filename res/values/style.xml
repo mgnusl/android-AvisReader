@@ -14,10 +14,10 @@
     <!-- Actionbar style -->
     <style name="ActionbarStyle"
            parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/actionbar_color1</item>
+        <item name="android:background">@color/actionbar_color3</item>
 
         <!-- Support library compatibility -->
-        <item name="background">@color/actionbar_color1</item>
+        <item name="background">@color/actionbar_color3</item>
     </style>
     
     <!-- Change the default overflow button -->

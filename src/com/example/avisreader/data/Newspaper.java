@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import org.apache.commons.lang3.text.WordUtils;
 
 public class Newspaper implements Parcelable, Comparable {
 
@@ -17,14 +18,14 @@ public class Newspaper implements Parcelable, Comparable {
 
     // Constructor used when creating new Newspapers from resources
     public Newspaper(String title, String url, String icon) {
-        this.title = title;
+        setTitle(title);
         this.url = url;
         this.icon = icon;
     }
 
     // Constructor used when creating new Newspapers from database
     public Newspaper(int id, String title, String url, boolean isFavorite, String icon, Bitmap ibm) {
-        this.title = title;
+        setTitle(title);
         this.url = url;
         this.id = id;
         this.isFavorite = isFavorite;
@@ -33,7 +34,7 @@ public class Newspaper implements Parcelable, Comparable {
     }
 
     public Newspaper(int id, String title, String url, boolean isFavorite, String icon) {
-        this.title = title;
+        setTitle(title);
         this.url = url;
         this.id = id;
         this.isFavorite = isFavorite;
@@ -47,7 +48,8 @@ public class Newspaper implements Parcelable, Comparable {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        // Capitalize first letter in every word
+        this.title = WordUtils.capitalizeFully(title);
     }
 
     public String getUrl() {
@@ -135,7 +137,7 @@ public class Newspaper implements Parcelable, Comparable {
 
     public Newspaper(Parcel in) {
         id = in.readInt();
-        title = in.readString();
+        setTitle(in.readString());
         url = in.readString();
         isFavorite = in.readByte() != 0;
         icon = in.readString();

@@ -122,6 +122,8 @@ public class WebViewActivity extends ActionBarActivity {
         // Actionbar
         getActionBar().setTitle(newspaper.getTitle());
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_navigation_previous_item);
+
 
     }
 
