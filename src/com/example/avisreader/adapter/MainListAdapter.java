@@ -51,7 +51,7 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
         final ViewHolder holder;
 
         if (convertView == null) {
-            convertView = inflater.inflate(resource, null);
+            convertView = inflater.inflate(resource, parent, false);
 
             holder = new ViewHolder();
             holder.iconImageView = (ImageView) convertView.findViewById(R.id.iconImageView);
