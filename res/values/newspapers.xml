@@ -2,8 +2,8 @@
 <resources>
     <string-array name="newspapers">
         <item>http://www.vg.no, VG</item>
-        <item>http://www.dagbladet.no, Dagbladet</item>
-        <item>http://www.aftenposten.no, Aftenposten</item>
+        <item>http://www.db.no, dagbladet</item>
+        <item>http://www.ap.no, aftenposten</item>
         <item>http://www.adressa.no, Adressa</item>
         <item>http://www.budstikka.no, Budstikka</item>
         <item>http://www.op.no, Østlands-Posten</item>
@@ -28,5 +28,67 @@
         <item>http://www.dittoslo.no/, dittoslo</item>
         <item>http://www.dt.no/, drammens tidende</item>
         <item>http://www.driva.no/, driva</item>
+        <item>http://e24.no/, e24</item>
+        <item>http://www.enebakkavis.no/, enebakk avis</item>
+        <item>http://www.finnmarkdagblad.no/, finnmark dagblad</item>
+        <item>http://www.finnmarken.no/, finnmarken</item>
+        <item>http://www.firda.no/, firda</item>
+        <item>http://www.firdaposten.no/, firdaposten</item>
+        <item>http://www.fjt.no/, fjordenes tidende</item>
+        <item>http://www.fjordingen.no/, fjordingen</item>
+        <item>http://www.f-b.no/, fredriksstad blad</item>
+        <item>http://www.fvn.no/, fædrelandsvennen</item>
+        <item>http://www.gjengangeren.no/, gjengangeren</item>
+        <item>http://gbnett.no/, gbnett</item>
+        <item>http://www.glomdalen.no/, glåmdalen</item>
+        <item>http://www.gd.no/, gudbrandsdølen</item>
+        <item>http://www.ha-halden.no/, halden arbeiderblad</item>
+        <item>http://www.ostlendingen.no/hamar-dagblad, hamar dagblad</item>
+        <item>http://www.ht.no/, harstad tidende</item>
+        <item>http://www.h-avis.no/, haugesunds avis</item>
+        <item>http://www.hegnar.no/, hegnar</item>
+        <item>http://www.helgeland-arbeiderblad.no/, helgeland arbeiderblad</item>
+        <item>http://www.indre.no/, indre</item>
+        <item>http://www.itavisen.no/, itavisen</item>
+        <item>http://www.jarlsbergavis.no/, jarlsberg avis</item>
+        <item>http://jbl.no/, jærbladet</item>
+        <item>http://www.kv.no/, kv</item>
+        <item>http://www.laagendalsposten.no/, laagendalsposten</item>
+        <item>http://www.lofot-tidende.no/, lofot-tidende</item>
+        <item>http://www.lofotposten.no/, lofotposten</item>
+        <item>http://www.mb.no/, malvikbladet</item>
+        <item>http://www.moss-avis.no/, moss-avis</item>
+        <item>http://www.namdalsavisa.no/, namdalsavisa</item>
+        <item>http://www.nationen.no/, nationen</item>
+        <item>http://www.nettavisen.no/, nettavisen</item>
+        <item>http://www.nordlys.no/, nordlys</item>
+        <item>http://www.nrk.no/, nrk</item>
+        <item>http://www.opdalingen.no/, Opdalingen</item>
+        <item>http://www.oa.no/, Oppland Arbeiderblad</item>
+        <item>http://www.pd.no/, porsgrunns dagblad</item>
+        <item>http://www.ranablad.no/, rana dagblad</item>
+        <item>http://www.ringblad.no/, ringerikets blad</item>
+        <item>http://www.rogalandsavis.no/, rogalands avis</item>
+        <item>http://www.rb.no/, romerikets blad</item>
+        <item>http://www.rbnett.no/, romsdals budstikke</item>
+        <item>http://www.saltenposten.no/, saltenposten</item>
+        <item>http://www.sb.no/, sandefjords blad</item>
+        <item>http://www.sa.no/, sarpsborg arbeiderblad</item>
+        <item>http://www.smaalenene.no/, smaalenenes avis</item>
+        <item>http://www.sognavis.no/, sogn avis</item>
+        <item>http://www.aftenbladet.no/, stavanger aftenblad</item>
+        <item>http://strandbuen.no/, strandbuen</item>
+        <item>http://www.sunnhordland.no/, sunnhordland</item>
+        <item>http://www.smp.no/, sunnmørsposten</item>
+        <item>http://www.ta.no/, telemarksavisa</item>
+        <item>http://www.telen.no/, telen</item>
+        <item>http://www.tk.no/, tidens krav</item>
+        <item>http://www.folkebladet.no/, troms folkeblad</item>
+        <item>http://www.t-a.no/, trønder-avisa</item>
+        <item>http://www.tb.no/, tønsbergs blad</item>
+        <item>http://www.varden.no/, varden</item>
+        <item>http://www.vl.no/, vårt land</item>
+        <item>http://www.oblad.no/, østlandets blad</item>
+        <item>http://www.ostlendingen.no/, østlendingen</item>
     </string-array>
 </resources>
