@@ -18,15 +18,20 @@ public class Newspaper implements Parcelable, Comparable {
 
     // Constructor used when creating new Newspapers from resources
     public Newspaper(String title, String url) {
-        setTitle(title);
+        setTitle(title.trim());
         this.url = url;
-        this.icon = getUrlDomainName(url);
+
+        String tempIcon = getUrlDomainName(url);
+        if (tempIcon.contains("-")) {
+            tempIcon = tempIcon.replace("-", "_");
+        }
+        this.icon = tempIcon;
     }
 
 
     // Constructor used when creating new Newspapers from database
     public Newspaper(int id, String title, String url, boolean isFavorite, String icon, Bitmap ibm) {
-        setTitle(title);
+        setTitle(title.trim());
         this.url = url;
         this.id = id;
         this.isFavorite = isFavorite;
@@ -35,7 +40,7 @@ public class Newspaper implements Parcelable, Comparable {
     }
 
     public Newspaper(int id, String title, String url, boolean isFavorite, String icon) {
-        setTitle(title);
+        setTitle(title.trim());
         this.url = url;
         this.id = id;
         this.isFavorite = isFavorite;
@@ -50,8 +55,28 @@ public class Newspaper implements Parcelable, Comparable {
     }
 
     public void setTitle(String title) {
-        // Capitalize first letter in every word
-        this.title = WordUtils.capitalizeFully(title);
+        // Capitalize first letter in every word/after dash
+
+        if (title.contains("-") && (title.indexOf("-") != 0)) {
+            int dashIndex = title.indexOf("-");
+            String firstPart = WordUtils.capitalize(title.substring(0, dashIndex));
+            String secondPart = WordUtils.capitalize(title.substring(dashIndex, title.length()));
+            this.title = firstPart + secondPart;
+            return;
+        }
+
+        if (title.toLowerCase().equals("vg") || title.toLowerCase().equals("nrk")) {
+            this.title = title.toUpperCase();
+            return;
+        } else if (title.toLowerCase().equals("itromsø")) {
+            this.title = "iTromsø";
+            return;
+        } else if (title.toLowerCase().equals("gbnett")) {
+            this.title = "GBnett";
+            return;
+        } else {
+            this.title = WordUtils.capitalizeFully(title);
+        }
     }
 
     public String getUrl() {

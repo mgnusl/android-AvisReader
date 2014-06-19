@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="newspapers">
-        <item>http://www.vg.no, VG</item>
+        <item>http://www.vg.no, vg</item>
         <item>http://www.db.no, dagbladet</item>
         <item>http://www.ap.no, aftenposten</item>
         <item>http://www.adressa.no, Adressa</item>
