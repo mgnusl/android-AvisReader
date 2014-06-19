@@ -1,12 +1,11 @@
 package com.example.avisreader.data;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 import org.apache.commons.lang3.text.WordUtils;
+
 
 public class Newspaper implements Parcelable, Comparable {
 
@@ -16,12 +15,14 @@ public class Newspaper implements Parcelable, Comparable {
     private boolean isFavorite;
     private Bitmap iconBitmap;
 
+
     // Constructor used when creating new Newspapers from resources
-    public Newspaper(String title, String url, String icon) {
+    public Newspaper(String title, String url) {
         setTitle(title);
         this.url = url;
-        this.icon = icon;
+        this.icon = getUrlDomainName(url);
     }
+
 
     // Constructor used when creating new Newspapers from database
     public Newspaper(int id, String title, String url, boolean isFavorite, String icon, Bitmap ibm) {
@@ -41,7 +42,8 @@ public class Newspaper implements Parcelable, Comparable {
         this.icon = icon;
     }
 
-    public Newspaper() {}
+    public Newspaper() {
+    }
 
     public String getTitle() {
         return title;
@@ -104,6 +106,32 @@ public class Newspaper implements Parcelable, Comparable {
                 '}';
     }
 
+    // Helper methods
+    public String getUrlDomainName(String url) {
+        String domainName = new String(url);
+
+        int index = domainName.indexOf("://");
+
+        if (index != -1) {
+            // keep everything after the "://"
+            domainName = domainName.substring(index + 3);
+        }
+
+        index = domainName.indexOf('/');
+
+        if (index != -1) {
+            // keep everything before the '/'
+            domainName = domainName.substring(0, index);
+        }
+
+        // check for and remove a preceding 'www'
+        domainName = domainName.replaceFirst("^www.*?\\.", "");
+        int indexOfDot = domainName.lastIndexOf(".");
+        domainName = domainName.substring(0, indexOfDot);
+
+        return domainName;
+    }
+
     // Parcelable methods
     public static final Parcelable.Creator<Newspaper> CREATOR = new Parcelable.Creator<Newspaper>() {
         public Newspaper createFromParcel(Parcel source) {
@@ -128,7 +156,7 @@ public class Newspaper implements Parcelable, Comparable {
         dest.writeByte((byte) (isFavorite ? 1 : 0));
         dest.writeString(icon);
         //dest.writeValue(((BitmapDrawable) iconBitmap).getBitmap());
-        if(iconBitmap != null) {
+        if (iconBitmap != null) {
             //iconBitmap.writeToParcel(dest, 0);
             dest.writeValue(iconBitmap);
         }

@@ -53,7 +53,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             List<String> tempList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.newspapers)));
             for (String s : tempList) {
                 String[] temp = s.split(",");
-                Newspaper np = new Newspaper(temp[1], temp[0], temp[2]);
+                Newspaper np = new Newspaper(temp[1], temp[0]);
                 int id = dbHelper.addNewspaper(np);
                 np.setId(id);
                 newsPaperList.add(np);
@@ -107,8 +107,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
 
                                 Newspaper np = new Newspaper(
                                         titleEditText.getText().toString(),
-                                        url,
-                                        ""
+                                        url
                                 );
                                 int id = dbHelper.addNewspaper(np);
                                 np.setId(id);
