@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="70dp"
                 android:background="#f9f9f9">
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_toRightOf="@+id/iconImageView"
         android:layout_marginLeft="10dp"
         android:text="Dagbladet"
-        android:fontFamily="sans-serif-light"
+        android:textSize="20dp"
         android:layout_centerVertical="true"/>
 
     <ImageView

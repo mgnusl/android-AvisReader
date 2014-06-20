@@ -1,6 +1,7 @@
 package com.example.avisreader.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,6 +66,10 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
         final Newspaper newspaper = getItem(position);
 
         holder.titleTextView.setText(newspaper.getTitle());
+
+        Typeface font = Typeface.createFromAsset(context.getApplicationContext().getAssets(), "fonts/calibri.ttf");
+        holder.titleTextView.setTypeface(font);
+
 
         holder.favoriteImageView.setImageResource(newspaper.isFavorite() ? R.drawable.ic_action_rating_important :
                 R.drawable.ic_action_rating_not_important);
