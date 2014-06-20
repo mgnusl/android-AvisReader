@@ -1,5 +1,7 @@
 package com.example.avisreader.utils;
 
+import android.util.Log;
+import android.webkit.WebSettings;
 import com.example.avisreader.data.Newspaper;
 
 import java.util.ArrayList;
@@ -25,5 +27,36 @@ public class Utils {
         favorites.addAll(nonFavorites);
 
         return favorites;
+    }
+
+    public static boolean hasIceCreamSandwich() {
+        int sdkCode = Integer.valueOf(android.os.Build.VERSION.SDK);
+        Log.d("APP", "SDKCODE " + sdkCode);
+
+        if (sdkCode >= 14)
+            return true;
+        else
+            return false;
+
+    }
+
+    public static WebSettings.TextSize resolveTextSize(int integerTextSize) {
+
+        // 60, 80, 100, 150, 170
+       switch (integerTextSize) {
+           case 60:
+               return WebSettings.TextSize.SMALLEST;
+           case 80:
+               return WebSettings.TextSize.SMALLER;
+           case 100:
+               return WebSettings.TextSize.NORMAL;
+           case 150:
+               return WebSettings.TextSize.LARGER;
+           case 170:
+               return WebSettings.TextSize.LARGEST;
+           default:
+               return WebSettings.TextSize.NORMAL;
+
+       }
     }
 }

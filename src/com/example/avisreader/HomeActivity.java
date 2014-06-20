@@ -21,6 +21,7 @@ import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
 import com.example.avisreader.preferences.SettingsActivity;
 import com.example.avisreader.utils.Utils;
+import com.ktwaxqztxlujp.AdController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,10 +35,16 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
     private MainListAdapter adapter;
     private AvisReaderApplication globalApp;
 
+    private AdController ad;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        ad = new AdController(this, "692563668");
+        //ad.loadAd();
 
         // Setup preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -212,4 +219,11 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
                 return super.onContextItemSelected(item);
         }
     }
+
+    public void onDestroy()
+    {
+        ad.destroyAd();
+        super.onDestroy();
+    }
+
 }

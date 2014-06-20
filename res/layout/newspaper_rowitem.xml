@@ -23,7 +23,7 @@
         android:layout_toRightOf="@+id/iconImageView"
         android:layout_marginLeft="10dp"
         android:text="Dagbladet"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:layout_centerVertical="true"/>
 
     <ImageView

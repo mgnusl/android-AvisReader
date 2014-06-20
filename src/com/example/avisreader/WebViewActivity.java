@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
 import com.example.avisreader.preferences.SettingsActivity;
+import com.example.avisreader.utils.Utils;
+import com.ktwaxqztxlujp.AdController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,6 +33,7 @@ public class WebViewActivity extends ActionBarActivity {
     private Newspaper newspaper;
     private ShareActionProvider shareActionProvider;
     private DatabaseHelper dbHelper;
+    private AdController ad;
 
 
     @Override
@@ -50,11 +53,20 @@ public class WebViewActivity extends ActionBarActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         int fontSize = 100;
         String fontSizeString = prefs.getString(SettingsActivity.KEY_FONT_SIZE, "empty");
-        if(!fontSizeString.equals("empty")) {
+        if (!fontSizeString.equals("empty")) {
             fontSize = Integer.parseInt(fontSizeString);
         }
-        settings.setTextZoom(fontSize);
 
+        if(Utils.hasIceCreamSandwich()) {
+            settings.setTextZoom(fontSize);
+        }
+        else {
+            settings.setTextSize(Utils.resolveTextSize(fontSize));
+        }
+
+
+        ad = new AdController(this, "692563668");
+        //ad.loadAd();
 
         webView.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
