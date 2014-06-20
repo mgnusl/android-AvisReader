@@ -9,4 +9,6 @@
         android:entries="@array/textsizes_entries"
         android:entryValues="@array/textsizes_values"
         android:defaultValue="100"/>
+
+
 </PreferenceScreen>

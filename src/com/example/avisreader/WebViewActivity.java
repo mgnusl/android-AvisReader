@@ -47,7 +47,11 @@ public class WebViewActivity extends ActionBarActivity {
 
         // Settings
         WebSettings settings = webView.getSettings();
-        webView.getSettings().setJavaScriptEnabled(true);
+        settings.setJavaScriptEnabled(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setBuiltInZoomControls(true);
+
 
         // Set font size from preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -57,10 +61,9 @@ public class WebViewActivity extends ActionBarActivity {
             fontSize = Integer.parseInt(fontSizeString);
         }
 
-        if(Utils.hasIceCreamSandwich()) {
+        if (Utils.hasIceCreamSandwich()) {
             settings.setTextZoom(fontSize);
-        }
-        else {
+        } else {
             settings.setTextSize(Utils.resolveTextSize(fontSize));
         }
 
@@ -92,15 +95,20 @@ public class WebViewActivity extends ActionBarActivity {
             public void onReceivedTitle(WebView view, String title) {
                 getActionBar().setTitle(title);
                 super.onReceivedTitle(view, title);
-                getActionBar().setIcon(new BitmapDrawable(getResources(), webView.getFavicon()));
+                if (Utils.hasIceCreamSandwich())
+                    getActionBar().setIcon(new BitmapDrawable(getResources(), webView.getFavicon()));
+                else
+                    getSupportActionBar().setIcon(new BitmapDrawable(getResources(), webView.getFavicon()));
 
             }
 
             @Override
             public void onReceivedIcon(WebView view, Bitmap icon) {
                 BitmapDrawable iconDrawable = new BitmapDrawable(getResources(), icon);
-                getActionBar().setIcon(iconDrawable);
-                getSupportActionBar().setIcon(iconDrawable);
+                if (Utils.hasIceCreamSandwich()) {
+                    getActionBar().setIcon(iconDrawable);
+                } else
+                    getSupportActionBar().setIcon(iconDrawable);
 
                 // Check if the current website url is part of the original url
                 try {
@@ -135,7 +143,6 @@ public class WebViewActivity extends ActionBarActivity {
         getActionBar().setTitle(newspaper.getTitle());
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_navigation_previous_item);
-
 
     }
 

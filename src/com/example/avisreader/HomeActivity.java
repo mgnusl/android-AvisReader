@@ -22,6 +22,8 @@ import com.example.avisreader.database.DatabaseHelper;
 import com.example.avisreader.preferences.SettingsActivity;
 import com.example.avisreader.utils.Utils;
 import com.ktwaxqztxlujp.AdController;
+import com.tundem.aboutlibraries.Libs;
+import com.tundem.aboutlibraries.ui.LibsActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -198,7 +200,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        if(v.getId() == R.id.listView) {
+        if (v.getId() == R.id.listView) {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.listview_context_menu, menu);
         }
@@ -220,8 +222,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         }
     }
 
-    public void onDestroy()
-    {
+    public void onDestroy() {
         ad.destroyAd();
         super.onDestroy();
     }

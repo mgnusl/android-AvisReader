@@ -5,7 +5,7 @@
           android:versionName="1.0">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
 
     <application
@@ -25,5 +25,8 @@
             android:name=".WebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".preferences.SettingsActivity"></activity>
+        <activity
+            android:name="com.tundem.aboutlibraries.ui.LibsActivity">
+        </activity>
     </application>
 </manifest>

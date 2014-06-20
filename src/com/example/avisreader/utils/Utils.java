@@ -31,7 +31,6 @@ public class Utils {
 
     public static boolean hasIceCreamSandwich() {
         int sdkCode = Integer.valueOf(android.os.Build.VERSION.SDK);
-        Log.d("APP", "SDKCODE " + sdkCode);
 
         if (sdkCode >= 14)
             return true;
