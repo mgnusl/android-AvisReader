@@ -28,5 +28,6 @@
         <activity
             android:name="com.tundem.aboutlibraries.ui.LibsActivity">
         </activity>
+        <activity android:name=".AboutActivity"></activity>
     </application>
 </manifest>

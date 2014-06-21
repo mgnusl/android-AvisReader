@@ -10,5 +10,14 @@
         android:entryValues="@array/textsizes_values"
         android:defaultValue="100"/>
 
+    <Preference
+        android:title="@string/pref_about"
+        android:summary="@string/pref_about_summary"
+        android:key="AboutInformation">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.example.avisreader"
+            android:targetClass="com.example.avisreader.AboutActivity" />
+    </Preference>
 
 </PreferenceScreen>

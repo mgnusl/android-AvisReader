@@ -21,18 +21,7 @@ public class SettingsActivity extends ActionBarActivity {
                 .commit();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_navigation_previous_item);
-
-        Intent i = new Intent(getApplicationContext(), LibsActivity.class);
-        i.putExtra(Libs.BUNDLE_FIELDS, Libs.toStringArray(R.string.class.getFields()));
-        i.putExtra(Libs.BUNDLE_LIBS, new String[]{"smoothprogressbar", "androidstyleddialogs"});
-        i.putExtra(Libs.BUNDLE_VERSION, true);
-        i.putExtra(Libs.BUNDLE_LICENSE, true);
-        i.putExtra(Libs.BUNDLE_TITLE, "Open Source");
-        i.putExtra(Libs.BUNDLE_ACCENT_COLOR, getResources().getColor(R.color.actionbar_color4));
-        i.putExtra(Libs.BUNDLE_TRANSLUCENT_DECOR, true);
-
-        startActivity(i);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_navigation_previous_item);
 
     }
 

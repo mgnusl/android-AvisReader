@@ -16,6 +16,8 @@
     <!-- Preferences -->
     <string name="pref_text_size">Text size</string>
     <string name="pref_text_size_summary">Size of text inside webpages</string>
+    <string name="pref_about">About / Licences</string>
+    <string name="pref_about_summary">About the application and libraries used</string>
 
     <string-array name="textsizes_entries">
         <item name="60">Extra small</item>
