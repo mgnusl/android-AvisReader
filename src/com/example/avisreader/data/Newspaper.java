@@ -18,7 +18,7 @@ public class Newspaper implements Parcelable, Comparable {
 
     // Constructor used when creating new Newspapers from resources
     public Newspaper(String title, String url) {
-        setTitle(title.trim());
+        setTitle(title);
         this.url = url;
 
         String tempIcon = getUrlDomainName(url);
@@ -31,7 +31,7 @@ public class Newspaper implements Parcelable, Comparable {
 
     // Constructor used when creating new Newspapers from database
     public Newspaper(int id, String title, String url, boolean isFavorite, String icon, Bitmap ibm) {
-        setTitle(title.trim());
+        setTitle(title);
         this.url = url;
         this.id = id;
         this.isFavorite = isFavorite;
@@ -40,7 +40,7 @@ public class Newspaper implements Parcelable, Comparable {
     }
 
     public Newspaper(int id, String title, String url, boolean isFavorite, String icon) {
-        setTitle(title.trim());
+        setTitle(title);
         this.url = url;
         this.id = id;
         this.isFavorite = isFavorite;
@@ -56,8 +56,7 @@ public class Newspaper implements Parcelable, Comparable {
 
     public void setTitle(String title) {
         // Capitalize first letter in every word/after dash
-
-        if (title.contains("-") && (title.indexOf("-") != 0)) {
+        if (title.trim().contains("-") && (title.indexOf("-") != 0)) {
             int dashIndex = title.indexOf("-");
             String firstPart = WordUtils.capitalize(title.substring(0, dashIndex));
             String secondPart = WordUtils.capitalize(title.substring(dashIndex, title.length()));
@@ -65,13 +64,13 @@ public class Newspaper implements Parcelable, Comparable {
             return;
         }
 
-        if (title.toLowerCase().equals("vg") || title.toLowerCase().equals("nrk")) {
+        if (title.trim().toLowerCase().equals("vg") || title.toLowerCase().equals("nrk")) {
             this.title = title.toUpperCase();
             return;
-        } else if (title.toLowerCase().equals("itromsø")) {
+        } else if (title.trim().toLowerCase().equals("itromsø")) {
             this.title = "iTromsø";
             return;
-        } else if (title.toLowerCase().equals("gbnett")) {
+        } else if (title.trim().toLowerCase().equals("gbnett")) {
             this.title = "GBnett";
             return;
         } else {
