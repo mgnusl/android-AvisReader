@@ -1,6 +1,5 @@
 package com.example.avisreader.utils;
 
-import android.util.Log;
 import android.webkit.WebSettings;
 import com.example.avisreader.data.Newspaper;
 
