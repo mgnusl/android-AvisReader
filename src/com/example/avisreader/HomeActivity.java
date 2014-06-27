@@ -1,6 +1,6 @@
 package com.example.avisreader;
 
-import android.app.AlertDialog;
+import  android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,7 +12,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -25,6 +24,8 @@ import com.example.avisreader.utils.Utils;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.ktwaxqztxlujp.AdController;
+import fr.nicolaspomepuy.discreetapprate.AppRate;
+import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,10 +46,12 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        AppRate.with(this).initialLaunchCount(3).retryPolicy(RetryPolicy.EXPONENTIAL)
+                .checkAndShow();
+
         // SuperToast style
         superToast = new SuperActivityToast(HomeActivity.this);
         superToast.setDuration(SuperToast.Duration.LONG);
-        superToast.setBackground(SuperToast.Background.RED);
         superToast.setTextColor(Color.WHITE);
         superToast.setTouchToDismiss(true);
 
@@ -253,9 +256,8 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.ctxmenu_delete:
-                Log.d("APP", "DELETE " + newsPaperList.get(info.position).getTitle());
                 dbHelper.deleteNewspaper(newsPaperList.get(info.position));
-                newsPaperList.remove(info.id);
+                newsPaperList.remove(info.position);
                 adapter.notifyDataSetChanged();
                 return true;
             default:
@@ -266,6 +268,14 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
     public void onDestroy() {
         ad.destroyAd();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        SuperActivityToast.onSaveState(outState);
+
     }
 
 }

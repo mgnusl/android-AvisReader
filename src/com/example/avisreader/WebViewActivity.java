@@ -3,6 +3,7 @@ package com.example.avisreader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,11 +13,12 @@ import android.util.Log;
 import android.view.*;
 import android.webkit.*;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
 import com.example.avisreader.preferences.SettingsActivity;
 import com.example.avisreader.utils.Utils;
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.ktwaxqztxlujp.AdController;
 
 import java.net.URI;
@@ -29,12 +31,18 @@ public class WebViewActivity extends ActionBarActivity {
     private ShareActionProvider shareActionProvider;
     private DatabaseHelper dbHelper;
     private AdController ad;
-
+    private SuperActivityToast superToast;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
+
+        // SuperToast style
+        superToast = new SuperActivityToast(WebViewActivity.this);
+        superToast.setDuration(SuperToast.Duration.LONG);
+        superToast.setTextColor(Color.WHITE);
+        superToast.setTouchToDismiss(true);
 
         webView = (WebView) findViewById(R.id.webview);
         dbHelper = DatabaseHelper.getInstance(this);
@@ -46,6 +54,7 @@ public class WebViewActivity extends ActionBarActivity {
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
         settings.setBuiltInZoomControls(true);
+        settings.setDisplayZoomControls(false);
 
         // Set font size from preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -67,7 +76,9 @@ public class WebViewActivity extends ActionBarActivity {
 
         webView.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                Toast.makeText(WebViewActivity.this, "Oh no! " + description, Toast.LENGTH_SHORT).show();
+                superToast.setBackground(SuperToast.Background.RED);
+                superToast.setText(getResources().getString(R.string.could_not_find));
+                superToast.show();
             }
 
             @Override
@@ -182,6 +193,14 @@ public class WebViewActivity extends ActionBarActivity {
         menuInflater.inflate(R.menu.webview_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        SuperActivityToast.onSaveState(outState);
 
     }
 
