@@ -18,7 +18,7 @@ public class AboutActivity extends ActionBarActivity {
 
         Intent i = new Intent(getApplicationContext(), LibsActivity.class);
         i.putExtra(Libs.BUNDLE_FIELDS, Libs.toStringArray(R.string.class.getFields()));
-        i.putExtra(Libs.BUNDLE_LIBS, new String[]{"smoothprogressbar", "androidstyleddialogs"});
+        i.putExtra(Libs.BUNDLE_LIBS, new String[]{"smoothprogressbar", "androidstyleddialogs", "supertoast"});
         i.putExtra(Libs.BUNDLE_VERSION, true);
         i.putExtra(Libs.BUNDLE_LICENSE, true);
         i.putExtra(Libs.BUNDLE_TITLE, "Open Source");

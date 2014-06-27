@@ -117,29 +117,4 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
 
     }
 
-    private List<Newspaper> sortDataset() {
-
-        List<Newspaper> nonFavorites = new ArrayList<Newspaper>();
-        List<Newspaper> favorites = new ArrayList<Newspaper>();
-
-        for (Newspaper np : newsPaperList) {
-            if (np.isFavorite())
-                favorites.add(np);
-            else
-                nonFavorites.add(np);
-        }
-
-        Collections.sort(favorites);
-        Collections.sort(nonFavorites);
-
-        favorites.addAll(nonFavorites);
-
-        notifyDataSetChanged();
-
-        return favorites;
-    }
-
-
-
-
 }

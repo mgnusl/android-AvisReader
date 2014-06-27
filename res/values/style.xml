@@ -13,7 +13,7 @@
 
     <style name="ActionBarWidget" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- SearchView customization-->
-        <item name="android:textColor">@color/text_color1</item>
+        <item name="android:textColor">@color/grey</item>
         <item name="searchViewSearchIcon">@drawable/ic_action_action_search</item>
         <item name="searchViewCloseIcon">@drawable/ic_action_content_remove</item>
         <item name="searchViewAutoCompleteTextView">@style/AutoCompleteTextView</item>
@@ -30,6 +30,7 @@
         <item name="android:src">@drawable/ic_action_core_overflow</item>
     </style>
 
+    <!-- Progress bar lib -->
     <style name="GPlusProgressBar" parent="SmoothProgressBar">
         <item name="spb_stroke_separator_length">0dp</item>
         <item name="spb_sections_count">4</item>

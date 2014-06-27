@@ -11,6 +11,8 @@
     <color name="error_color">#CE0A31</color>
     <color name="error_color2">#E32F21</color>
 
+    <color name="grey">#353535</color>
+
     <integer-array name="gplus_colors">
         <item>@color/actionbar_color</item>
         <item>@color/actionbar_color1</item>
