@@ -130,7 +130,7 @@ public class Newspaper implements Parcelable, Comparable {
     }
 
     // Helper methods
-    public String getUrlDomainName(String url) {
+    public String getUrlDomainName(String url) throws StringIndexOutOfBoundsException {
         String domainName = new String(url);
 
         int index = domainName.indexOf("://");
@@ -150,7 +150,10 @@ public class Newspaper implements Parcelable, Comparable {
         // check for and remove a preceding 'www'
         domainName = domainName.replaceFirst("^www.*?\\.", "");
         int indexOfDot = domainName.lastIndexOf(".");
-        domainName = domainName.substring(0, indexOfDot);
+        if(indexOfDot > 0)
+            domainName = domainName.substring(0, indexOfDot);
+        else
+            return "noicon";
 
         return domainName;
     }

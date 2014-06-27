@@ -12,6 +12,10 @@
     <string name="share_this">Share via</string>
     <string name="delete">Delete</string>
     <string name="settings">Settings</string>
+    <string name="invalid">Invalid URL</string>
+    <string name="empty_input">Both fields need to be filled out</string>
+    <string name="success">Newspaper successfully added</string>
+
 
     <!-- Preferences -->
     <string name="pref_text_size">Text size</string>

@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
@@ -21,9 +22,9 @@ import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
 import com.example.avisreader.preferences.SettingsActivity;
 import com.example.avisreader.utils.Utils;
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.ktwaxqztxlujp.AdController;
-import com.tundem.aboutlibraries.Libs;
-import com.tundem.aboutlibraries.ui.LibsActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,14 +37,20 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
     private DatabaseHelper dbHelper;
     private MainListAdapter adapter;
     private AvisReaderApplication globalApp;
-
     private AdController ad;
-
+    private SuperActivityToast superToast;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        // SuperToast style
+        superToast = new SuperActivityToast(HomeActivity.this);
+        superToast.setDuration(SuperToast.Duration.LONG);
+        superToast.setBackground(SuperToast.Background.RED);
+        superToast.setTextColor(Color.WHITE);
+        superToast.setTouchToDismiss(true);
 
         ad = new AdController(this, "692563668");
         //ad.loadAd();
@@ -106,22 +113,50 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
                                 EditText titleEditText = (EditText) inflator.findViewById(R.id.titleEditText);
                                 EditText urlEditText = (EditText) inflator.findViewById(R.id.urlEditText);
 
-                                // Validate the url
-                                String url = urlEditText.getText().toString();
-                                if (!url.contains("http://")) {
-                                    StringBuilder sb = new StringBuilder(url);
-                                    sb.insert(0, "http://");
-                                    url = sb.toString();
+                                // Validate the url. Add it if no exceptions are thrown
+                                boolean successful = true;
+                                String url = "";
+                                String title = "";
+                                try {
+                                    url = urlEditText.getText().toString();
+                                    title = titleEditText.getText().toString();
+                                    if (url.equals("") || title.equals(""))
+                                        throw new IllegalArgumentException();
+                                    if (!url.contains("http://")) {
+                                        StringBuilder sb = new StringBuilder(url);
+                                        sb.insert(0, "http://");
+                                        url = sb.toString();
+                                    }
+                                } catch (IllegalArgumentException e) {
+                                    e.printStackTrace();
+                                    successful = false;
+                                    superToast.setBackground(SuperToast.Background.RED);
+                                    superToast.setText(getResources().getString(R.string.empty_input));
+                                    superToast.show();
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    successful = false;
+                                    superToast.setBackground(SuperToast.Background.RED);
+                                    superToast.setText(getResources().getString(R.string.invalid));
+                                    superToast.show();
+                                } finally {
+                                    if (successful) {
+                                        Newspaper np = new Newspaper(
+                                                title,
+                                                url
+                                        );
+                                        int id = dbHelper.addNewspaper(np);
+                                        np.setId(id);
+                                        newsPaperList.add(np);
+                                        adapter.notifyDataSetChanged();
+                                        superToast.setText(getResources().getString(R.string.success));
+                                        superToast.setBackground(SuperToast.Background.GREEN);
+                                        superToast.show();
+                                    }
+
                                 }
 
-                                Newspaper np = new Newspaper(
-                                        titleEditText.getText().toString(),
-                                        url
-                                );
-                                int id = dbHelper.addNewspaper(np);
-                                np.setId(id);
-                                newsPaperList.add(np);
-                                adapter.notifyDataSetChanged();
                             }
                         })
                 .setNegativeButton(getResources().getString(R.string.cancel),

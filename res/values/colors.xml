@@ -8,6 +8,8 @@
     <color name="actionbar_color4">#d56a60</color>
 
     <color name="text_color1">#f0f0f0</color>
+    <color name="error_color">#CE0A31</color>
+    <color name="error_color2">#E32F21</color>
 
     <integer-array name="gplus_colors">
         <item>@color/actionbar_color</item>
