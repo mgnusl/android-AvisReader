@@ -117,4 +117,6 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
 
     }
 
+
+
 }

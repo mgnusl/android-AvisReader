@@ -149,7 +149,13 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
                                         int id = dbHelper.addNewspaper(np);
                                         np.setId(id);
                                         newsPaperList.add(np);
+
+                                        // Sort the dataset and notify the view of updates
+                                        List<Newspaper> tempList = Utils.sortDataset(newsPaperList);
+                                        newsPaperList.clear();
+                                        newsPaperList.addAll(tempList);
                                         adapter.notifyDataSetChanged();
+
                                         superToast.setText(getResources().getString(R.string.success));
                                         superToast.setBackground(SuperToast.Background.GREEN);
                                         superToast.show();

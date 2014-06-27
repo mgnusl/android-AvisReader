@@ -59,12 +59,12 @@ public class Newspaper implements Parcelable, Comparable {
             int dashIndex = title.indexOf("-");
             String firstPart = WordUtils.capitalize(title.substring(0, dashIndex));
             String secondPart = WordUtils.capitalize(title.substring(dashIndex, title.length()));
-            this.title = firstPart + secondPart;
+            this.title = firstPart.trim() + secondPart;
             return;
         }
 
         if (title.trim().toLowerCase().equals("vg") || title.toLowerCase().equals("nrk")) {
-            this.title = title.toUpperCase();
+            this.title = title.toUpperCase().trim();
             return;
         } else if (title.trim().toLowerCase().equals("itromsø")) {
             this.title = "iTromsø";
@@ -73,7 +73,7 @@ public class Newspaper implements Parcelable, Comparable {
             this.title = "GBnett";
             return;
         } else {
-            this.title = WordUtils.capitalizeFully(title);
+            this.title = WordUtils.capitalizeFully(title).trim();
         }
     }
 

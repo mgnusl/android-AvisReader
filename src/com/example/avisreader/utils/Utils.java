@@ -1,5 +1,6 @@
 package com.example.avisreader.utils;
 
+import android.util.Log;
 import android.webkit.WebSettings;
 import com.example.avisreader.data.Newspaper;
 
@@ -24,6 +25,9 @@ public class Utils {
         Collections.sort(nonFavorites);
 
         favorites.addAll(nonFavorites);
+
+        for(Newspaper lol : favorites)
+            Log.d("APP", lol.getTitle());
 
         return favorites;
     }
