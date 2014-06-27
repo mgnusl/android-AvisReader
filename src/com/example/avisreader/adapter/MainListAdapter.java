@@ -67,8 +67,8 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
 
         holder.titleTextView.setText(newspaper.getTitle());
 
-        Typeface font = Typeface.createFromAsset(context.getApplicationContext().getAssets(), "fonts/calibri.ttf");
-        holder.titleTextView.setTypeface(font);
+        //Typeface font = Typeface.createFromAsset(context.getApplicationContext().getAssets(), "fonts/calibri.ttf");
+        //holder.titleTextView.setTypeface(font);
 
 
         holder.favoriteImageView.setImageResource(newspaper.isFavorite() ? R.drawable.ic_action_rating_important :

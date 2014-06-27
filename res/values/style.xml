@@ -2,7 +2,6 @@
 <resources>
 
     <style name="CustomActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowBackground">@color/actionbar_color</item>
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarWidgetTheme">@style/ActionBarWidget</item>
     </style>
@@ -14,15 +13,15 @@
 
     <style name="ActionBarWidget" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- SearchView customization-->
+        <item name="android:textColor">@color/text_color1</item>
         <item name="searchViewSearchIcon">@drawable/ic_action_action_search</item>
         <item name="searchViewCloseIcon">@drawable/ic_action_content_remove</item>
         <item name="searchViewAutoCompleteTextView">@style/AutoCompleteTextView</item>
     </style>
 
     <style name="AutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/text_color1</item>
         <item name="android:textCursorDrawable">@null</item>
-        <item name="android:textColorHighlight">@color/actionbar_color2</item>
     </style>
 
 

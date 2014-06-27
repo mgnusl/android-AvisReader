@@ -10,7 +10,6 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:id="@+id/iconImageView"
-        android:src="@drawable/vg"
         android:layout_centerVertical="true"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
@@ -22,8 +21,8 @@
         android:id="@+id/newsPaperTitle"
         android:layout_toRightOf="@+id/iconImageView"
         android:layout_marginLeft="10dp"
-        android:text="Dagbladet"
         android:textSize="20sp"
+        android:fontFamily="sans-serif-light"
         android:layout_centerVertical="true"/>
 
     <ImageView

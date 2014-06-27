@@ -7,6 +7,8 @@
     <color name="actionbar_color3">#476277</color>
     <color name="actionbar_color4">#d56a60</color>
 
+    <color name="text_color1">#f0f0f0</color>
+
     <integer-array name="gplus_colors">
         <item>@color/actionbar_color</item>
         <item>@color/actionbar_color1</item>
