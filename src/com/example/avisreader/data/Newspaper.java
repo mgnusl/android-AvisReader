@@ -3,6 +3,7 @@ package com.example.avisreader.data;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 
@@ -59,21 +60,21 @@ public class Newspaper implements Parcelable, Comparable {
             int dashIndex = title.indexOf("-");
             String firstPart = WordUtils.capitalize(title.substring(0, dashIndex));
             String secondPart = WordUtils.capitalize(title.substring(dashIndex, title.length()));
-            this.title = firstPart.trim() + secondPart;
+            this.title = firstPart + secondPart;
             return;
         }
 
         if (title.trim().toLowerCase().equals("vg") || title.toLowerCase().equals("nrk")) {
-            this.title = title.toUpperCase().trim();
+            this.title = title.toUpperCase();
             return;
         } else if (title.trim().toLowerCase().equals("itromsø")) {
-            this.title = "iTromsø";
+            this.title = " iTromsø";
             return;
         } else if (title.trim().toLowerCase().equals("gbnett")) {
-            this.title = "GBnett";
+            this.title = " GBnett";
             return;
         } else {
-            this.title = WordUtils.capitalizeFully(title).trim();
+            this.title = WordUtils.capitalizeFully(title);
         }
     }
 

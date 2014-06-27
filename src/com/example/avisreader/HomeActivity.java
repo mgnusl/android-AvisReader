@@ -146,7 +146,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
                                 } finally {
                                     if (successful) {
                                         Newspaper np = new Newspaper(
-                                                title,
+                                                " " + title,
                                                 url
                                         );
                                         int id = dbHelper.addNewspaper(np);
