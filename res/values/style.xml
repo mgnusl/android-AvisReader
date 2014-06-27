@@ -41,4 +41,5 @@
         <item name="spb_colors">@array/gplus_colors</item>
         <item name="spb_progressiveStart_activated">false</item>
     </style>
+
 </resources>

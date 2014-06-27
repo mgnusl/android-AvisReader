@@ -41,7 +41,7 @@
     <!-- About libraries -->
     <string name="aboutLibraries_description_showIcon">true</string>
     <string name="aboutLibraries_description_showVersion">true</string>
-    <string name="aboutLibraries_description_text">Place your description here :D</string>
+    <string name="aboutLibraries_description_text">Norske Aviser</string>
 
     <!-- Apache commons -->
     <string name="define_commonslang"></string>

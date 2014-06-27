@@ -1,9 +1,7 @@
 package com.example.avisreader.adapter;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +11,6 @@ import com.example.avisreader.data.Newspaper;
 import com.example.avisreader.database.DatabaseHelper;
 import com.example.avisreader.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MainListAdapter extends ArrayAdapter<Newspaper> {

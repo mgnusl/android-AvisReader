@@ -1,15 +1,11 @@
 package com.example.avisreader;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
@@ -25,7 +21,6 @@ import com.ktwaxqztxlujp.AdController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 public class WebViewActivity extends ActionBarActivity {
 
@@ -51,7 +46,6 @@ public class WebViewActivity extends ActionBarActivity {
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
         settings.setBuiltInZoomControls(true);
-
 
         // Set font size from preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

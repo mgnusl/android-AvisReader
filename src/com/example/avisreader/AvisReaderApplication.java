@@ -2,8 +2,6 @@ package com.example.avisreader;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class AvisReaderApplication extends Application {
 
