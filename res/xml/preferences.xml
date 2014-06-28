@@ -20,4 +20,14 @@
             android:targetClass="no.kreativo.newspapersnor.AboutActivity" />
     </Preference>
 
+    <Preference
+        android:title="@string/pref_ads"
+        android:summary="@string/pref_ads_summary"
+        android:key="RemoveAds">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="no.kreativo.newspapersnor"
+            android:targetClass="no.kreativo.newspapersnor.InAppActivity" />
+    </Preference>
+
 </PreferenceScreen>

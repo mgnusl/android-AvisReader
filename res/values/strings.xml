@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Norske Aviser</string>
     <string name="search">Søk</string>
     <string name="refresh">Oppdater</string>
@@ -22,6 +23,8 @@
     <string name="pref_text_size_summary">Tekststørrelse i nettleser</string>
     <string name="pref_about">Om / Lisenser</string>
     <string name="pref_about_summary">Om appen og brukte biblioteker</string>
+    <string name="pref_ads">Fjern reklame</string>
+    <string name="pref_ads_summary">Fjern reklame</string>
 
     <string-array name="textsizes_entries">
         <item name="60">Ekstra liten</item>
@@ -30,7 +33,6 @@
         <item name="150">Stor</item>
         <item name="170">Ekstra stor</item>
     </string-array>
-
     <string-array name="textsizes_values">
         <item name="60">60</item>
         <item name="80">80</item>
@@ -72,5 +74,8 @@
     <string name="library_supertoast_isOpenSource">true</string>
     <string name="library_supertoast_repositoryLink">http://commons.apache.org/proper/commons-lang/download_lang.cgi</string>
     <string name="library_supertoast_licenseId">apache_2_0</string>
+    <string name="title_activity_in_app">InAppActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
