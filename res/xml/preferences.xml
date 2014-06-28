@@ -16,8 +16,8 @@
         android:key="AboutInformation">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.example.avisreader"
-            android:targetClass="com.example.avisreader.AboutActivity" />
+            android:targetPackage="no.kreativo.newspapersnor"
+            android:targetClass="no.kreativo.newspapersnor.AboutActivity" />
     </Preference>
 
 </PreferenceScreen>

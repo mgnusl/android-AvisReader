@@ -1,4 +1,4 @@
-package com.example.avisreader.preferences;
+package no.kreativo.newspapersnor.preferences;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

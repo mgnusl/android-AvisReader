@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.avisreader"
+          package="no.kreativo.newspapersnor"
           android:versionCode="1"
           android:versionName="1.0">
 
@@ -9,12 +9,12 @@
 
 
     <application
-        android:name=".AvisReaderApplication"
+        android:name="no.kreativo.newspapersnor.AvisReaderApplication"
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
         android:theme="@style/CustomActionBarTheme">
         <activity
-            android:name=".HomeActivity"
+            android:name="no.kreativo.newspapersnor.HomeActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,12 +22,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WebViewActivity"
+            android:name="no.kreativo.newspapersnor.WebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".preferences.SettingsActivity"></activity>
+        <activity android:name="no.kreativo.newspapersnor.preferences.SettingsActivity"></activity>
         <activity
             android:name="com.tundem.aboutlibraries.ui.LibsActivity">
         </activity>
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name="no.kreativo.newspapersnor.AboutActivity"></activity>
     </application>
 </manifest>

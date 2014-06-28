@@ -1,4 +1,4 @@
-package com.example.avisreader.adapter;
+package no.kreativo.newspapersnor.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.example.avisreader.R;
-import com.example.avisreader.data.Newspaper;
-import com.example.avisreader.database.DatabaseHelper;
-import com.example.avisreader.utils.Utils;
+import no.kreativo.newspapersnor.R;
+import no.kreativo.newspapersnor.data.Newspaper;
+import no.kreativo.newspapersnor.database.DatabaseHelper;
+import no.kreativo.newspapersnor.utils.Utils;
 
 import java.util.List;
 

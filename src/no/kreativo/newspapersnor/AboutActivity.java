@@ -1,4 +1,4 @@
-package com.example.avisreader;
+package no.kreativo.newspapersnor;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,8 +1,8 @@
-package com.example.avisreader.preferences;
+package no.kreativo.newspapersnor.preferences;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import com.example.avisreader.R;
+import no.kreativo.newspapersnor.R;
 
 public class SettingsFragment extends PreferenceFragment {
 

@@ -1,4 +1,4 @@
-package com.example.avisreader;
+package no.kreativo.newspapersnor;
 
 import android.app.Application;
 import android.content.SharedPreferences;

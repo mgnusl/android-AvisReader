@@ -1,4 +1,4 @@
-package com.example.avisreader.data;
+package no.kreativo.newspapersnor.data;
 
 import android.graphics.Bitmap;
 import android.os.Parcel;

@@ -1,4 +1,4 @@
-package com.example.avisreader;
+package no.kreativo.newspapersnor;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,10 +13,10 @@ import android.util.Log;
 import android.view.*;
 import android.webkit.*;
 import android.widget.ProgressBar;
-import com.example.avisreader.data.Newspaper;
-import com.example.avisreader.database.DatabaseHelper;
-import com.example.avisreader.preferences.SettingsActivity;
-import com.example.avisreader.utils.Utils;
+import no.kreativo.newspapersnor.data.Newspaper;
+import no.kreativo.newspapersnor.database.DatabaseHelper;
+import no.kreativo.newspapersnor.preferences.SettingsActivity;
+import no.kreativo.newspapersnor.utils.Utils;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.ktwaxqztxlujp.AdController;

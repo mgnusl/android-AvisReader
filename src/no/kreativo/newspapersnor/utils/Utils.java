@@ -1,7 +1,7 @@
-package com.example.avisreader.utils;
+package no.kreativo.newspapersnor.utils;
 
 import android.webkit.WebSettings;
-import com.example.avisreader.data.Newspaper;
+import no.kreativo.newspapersnor.data.Newspaper;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.example.avisreader.database;
+package no.kreativo.newspapersnor.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import com.example.avisreader.data.Newspaper;
+import no.kreativo.newspapersnor.data.Newspaper;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
