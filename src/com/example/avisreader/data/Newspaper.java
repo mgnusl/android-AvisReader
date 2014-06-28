@@ -3,7 +3,6 @@ package com.example.avisreader.data;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 

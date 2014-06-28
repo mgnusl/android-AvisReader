@@ -46,6 +46,8 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        globalApp = (AvisReaderApplication) getApplicationContext();
+
         AppRate.with(this).initialLaunchCount(3).retryPolicy(RetryPolicy.EXPONENTIAL)
                 .checkAndShow();
 
@@ -55,16 +57,20 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         superToast.setTextColor(Color.WHITE);
         superToast.setTouchToDismiss(true);
 
-        ad = new AdController(this, "692563668");
-        //ad.loadAd();
+        // Ads
+        int count = globalApp.getGlobalCounter();
+        if (((count % 18) == 0) && (count > 0)) {
+            // vis reklame
+            ad = new AdController(this, "692563668");
+            //ad.loadAd();
+        }
+        globalApp.incrementGlobalCounter();
 
         // Setup preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         listView = (ListView) findViewById(R.id.listView);
-
         dbHelper = DatabaseHelper.getInstance(this);
-        globalApp = (AvisReaderApplication) getApplicationContext();
         newsPaperList = new ArrayList<Newspaper>();
 
         // If first time launch, fill newsPaperList with default Newspapers

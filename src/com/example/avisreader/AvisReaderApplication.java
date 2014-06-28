@@ -2,6 +2,7 @@ package com.example.avisreader;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class AvisReaderApplication extends Application {
 
@@ -28,5 +29,20 @@ public class AvisReaderApplication extends Application {
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("isFirstLaunch", value);
         editor.commit();
+    }
+
+    public void incrementGlobalCounter() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        int current = getGlobalCounter();
+        editor.putInt("globalteller", current++);
+        editor.commit();
+
+    }
+
+    public int getGlobalCounter() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int tell = preferences.getInt("globalteller", -1);
+        return tell;
     }
 }

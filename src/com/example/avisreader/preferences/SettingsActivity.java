@@ -1,12 +1,8 @@
 package com.example.avisreader.preferences;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
-import com.example.avisreader.R;
-import com.tundem.aboutlibraries.Libs;
-import com.tundem.aboutlibraries.ui.LibsActivity;
 
 public class SettingsActivity extends ActionBarActivity {
 
