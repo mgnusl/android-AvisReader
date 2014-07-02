@@ -2,6 +2,7 @@ package no.kreativo.newspapersnor.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,10 +64,6 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
 
         holder.titleTextView.setText(newspaper.getTitle());
 
-        //Typeface font = Typeface.createFromAsset(context.getApplicationContext().getAssets(), "fonts/calibri.ttf");
-        //holder.titleTextView.setTypeface(font);
-
-
         holder.favoriteImageView.setImageResource(newspaper.isFavorite() ? R.drawable.ic_action_rating_important :
                 R.drawable.ic_action_rating_not_important);
 
@@ -107,6 +104,8 @@ public class MainListAdapter extends ArrayAdapter<Newspaper> {
                 notifyDataSetChanged();
             }
         });
+
+        Log.d("APP", " " + newsPaperList.size());
 
 
         return convertView;

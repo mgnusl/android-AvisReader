@@ -141,7 +141,7 @@ public class WebViewActivity extends ActionBarActivity {
         });
 
         // Load webpage
-        newspaper = getIntent().getParcelableExtra("url");
+        newspaper = getIntent().getParcelableExtra("selected_newspaper");
         webView.loadUrl(newspaper.getUrl());
 
         // Actionbar

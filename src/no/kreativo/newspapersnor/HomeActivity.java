@@ -1,6 +1,6 @@
 package no.kreativo.newspapersnor;
 
-import  android.app.AlertDialog;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,20 +12,21 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import no.kreativo.newspapersnor.adapter.MainListAdapter;
-import no.kreativo.newspapersnor.data.Newspaper;
-import no.kreativo.newspapersnor.database.DatabaseHelper;
-import no.kreativo.newspapersnor.preferences.SettingsActivity;
-import no.kreativo.newspapersnor.utils.Utils;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.ktwaxqztxlujp.AdController;
 import fr.nicolaspomepuy.discreetapprate.AppRate;
 import fr.nicolaspomepuy.discreetapprate.RetryPolicy;
+import no.kreativo.newspapersnor.adapter.MainListAdapter;
+import no.kreativo.newspapersnor.data.Newspaper;
+import no.kreativo.newspapersnor.database.DatabaseHelper;
+import no.kreativo.newspapersnor.preferences.SettingsActivity;
+import no.kreativo.newspapersnor.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -96,10 +97,12 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(HomeActivity.this, WebViewActivity.class).putExtra("url",
-                        newsPaperList.get(position)));
+                Newspaper entry = (Newspaper) parent.getItemAtPosition(position);
+                startActivity(new Intent(HomeActivity.this, WebViewActivity.class).putExtra("selected_newspaper",
+                entry));
             }
         });
+
 
         registerForContextMenu(listView);
 
