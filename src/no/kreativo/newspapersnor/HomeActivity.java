@@ -103,7 +103,6 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             }
         });
 
-
         registerForContextMenu(listView);
 
     }

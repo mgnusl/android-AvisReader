@@ -2,6 +2,7 @@ package no.kreativo.newspapersnor.utils;
 
 import android.webkit.WebSettings;
 import no.kreativo.newspapersnor.data.Newspaper;
+import no.kreativo.newspapersnor.util.IabHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,5 +57,9 @@ public class Utils {
                return WebSettings.TextSize.NORMAL;
 
        }
+    }
+
+    public static IabHelper getIabHelper() {
+
     }
 }

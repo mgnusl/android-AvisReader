@@ -14,4 +14,17 @@
        android:id="@+id/knapp"
        android:text="TRYKK"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/knapp2"
+        android:text="SJEKK INVENTORY."
+        android:layout_below="@+id/knapp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dette vil fjerne all reklame i appen."
+        android:layout_below="@+id/knapp2"/>
+
 </RelativeLayout>
