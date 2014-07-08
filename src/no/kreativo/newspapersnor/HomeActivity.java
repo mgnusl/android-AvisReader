@@ -12,11 +12,11 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.ktwaxqztxlujp.AdController;
@@ -26,6 +26,9 @@ import no.kreativo.newspapersnor.adapter.MainListAdapter;
 import no.kreativo.newspapersnor.data.Newspaper;
 import no.kreativo.newspapersnor.database.DatabaseHelper;
 import no.kreativo.newspapersnor.preferences.SettingsActivity;
+import no.kreativo.newspapersnor.util.IabHelper;
+import no.kreativo.newspapersnor.util.IabResult;
+import no.kreativo.newspapersnor.util.Inventory;
 import no.kreativo.newspapersnor.utils.Utils;
 
 import java.util.ArrayList;
@@ -41,6 +44,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
     private AvisReaderApplication globalApp;
     private AdController ad;
     private SuperActivityToast superToast;
+    private IabHelper iabHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,14 +62,13 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         superToast.setTextColor(Color.WHITE);
         superToast.setTouchToDismiss(true);
 
-        // Ads
-        int count = globalApp.getGlobalCounter();
-        if (((count % 18) == 0) && (count > 0)) {
-            // vis reklame
-            ad = new AdController(this, "692563668");
-            //ad.loadAd();
-        }
-        globalApp.incrementGlobalCounter();
+        // Setup in-app billing
+        iabHelper = new IabHelper(this, Utils.PUBLIC_KEY);
+        iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                iabHelper.queryInventoryAsync(gotInventoryListener);
+            }
+        });
 
         // Setup preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -89,7 +92,6 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             newsPaperList = dbHelper.getAllNewspapers();
         }
 
-
         adapter = new MainListAdapter(this, R.layout.newspaper_rowitem, newsPaperList);
         listView.setAdapter(adapter);
         listView.setTextFilterEnabled(true);
@@ -99,7 +101,7 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Newspaper entry = (Newspaper) parent.getItemAtPosition(position);
                 startActivity(new Intent(HomeActivity.this, WebViewActivity.class).putExtra("selected_newspaper",
-                entry));
+                        entry));
             }
         });
 
@@ -107,6 +109,29 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
 
     }
 
+    public IabHelper.QueryInventoryFinishedListener gotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+            if (result.isFailure()) {
+                // handle error here
+            } else {
+                // does the user have the premium upgrade?
+                boolean hasRemoveAds = inventory.hasPurchase(Utils.SKU_REMOVEADS);
+                superToast.setText("Har tidligere kjøpt removeads: " + hasRemoveAds);
+                superToast.setBackground(SuperToast.Background.BLUE);
+                superToast.show();
+
+                // Ads
+                int count = globalApp.getGlobalCounter();
+                //if (((count % 18) == 0) && (count > 0)) {
+                if (true) {
+                    // vis reklame
+                    ad = new AdController(HomeActivity.this, "692563668");
+                    ad.loadAd();
+                }
+                globalApp.incrementGlobalCounter();
+            }
+        }
+    };
 
     private void showAddPopupDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -245,8 +270,11 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         newsPaperList.clear();
         newsPaperList.addAll(tempList);
         adapter.notifyDataSetChanged();
-    }
 
+        // Maybe show ads
+        iabHelper.queryInventoryAsync(gotInventoryListener);
+
+    }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -257,7 +285,6 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             inflater.inflate(R.menu.listview_context_menu, menu);
         }
     }
-
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -273,17 +300,26 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
         }
     }
 
+    @Override
     public void onDestroy() {
         ad.destroyAd();
         super.onDestroy();
+        if (iabHelper != null) iabHelper.dispose();
+        iabHelper = null;
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         SuperActivityToast.onSaveState(outState);
-
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!iabHelper.handleActivityResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
 
 }

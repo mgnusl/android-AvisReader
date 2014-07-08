@@ -10,6 +10,17 @@ import java.util.List;
 
 public class Utils {
 
+    public static final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApdCJK4xM08" +
+                                            "rnNBcWnJNPzYtJtpNvCx+0Gw0bBUigYPql8fx2KTTCgzPhvSsbrEqf" +
+                                            "GiEwlvDPRAPSTCqwkN6VR1Kxw/iqL77s/GPIsdvA/l2br/n23ZKhKB" +
+                                            "5OoZVVrOliy1mykhAlDdIM8V6ZQ/FUt8OjCWgSB8QOTKPe5bNBbYxM" +
+                                            "m2Ho7ka4IhfRTy1JYoTCPXm9ZnGXVOLbZ2glSiuWpm7PwNA8kZKhS+" +
+                                            "xA0dfZTU4m9kFgeMQVkGvJYWrz1TtEioLfQiMiohT/Aa0ScdgphdhB" +
+                                            "efM/OXZAZtGlMbUd2404FYDZY07taEgmj2IUotkCFZUel15CgJmMiq" +
+                                            "ZOIlXaKQIDAQAB";
+    public static final String SKU_REMOVEADS = "removeads";
+
+
     public static List<Newspaper> sortDataset(List<Newspaper> initialList) {
         List<Newspaper> nonFavorites = new ArrayList<Newspaper>();
         List<Newspaper> favorites = new ArrayList<Newspaper>();
@@ -59,7 +70,4 @@ public class Utils {
        }
     }
 
-    public static IabHelper getIabHelper() {
-
-    }
 }
