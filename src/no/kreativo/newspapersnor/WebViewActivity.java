@@ -16,6 +16,9 @@ import android.widget.ProgressBar;
 import no.kreativo.newspapersnor.data.Newspaper;
 import no.kreativo.newspapersnor.database.DatabaseHelper;
 import no.kreativo.newspapersnor.preferences.SettingsActivity;
+import no.kreativo.newspapersnor.util.IabHelper;
+import no.kreativo.newspapersnor.util.IabResult;
+import no.kreativo.newspapersnor.util.Inventory;
 import no.kreativo.newspapersnor.utils.Utils;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -32,11 +35,24 @@ public class WebViewActivity extends ActionBarActivity {
     private DatabaseHelper dbHelper;
     private AdController ad;
     private SuperActivityToast superToast;
+    private IabHelper iabHelper;
+    private AvisReaderApplication globalApp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
+
+        // Setup in-app billing
+        iabHelper = new IabHelper(this, Utils.PUBLIC_KEY);
+        iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                iabHelper.queryInventoryAsync(gotInventoryListener);
+            }
+        });
+
+        globalApp = (AvisReaderApplication) getApplicationContext();
+
 
         // SuperToast style
         superToast = new SuperActivityToast(WebViewActivity.this);
@@ -167,6 +183,28 @@ public class WebViewActivity extends ActionBarActivity {
         webView.loadUrl(url);
     }
 
+    public IabHelper.QueryInventoryFinishedListener gotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+            if (result.isFailure()) {
+                // handle error here
+            } else {
+                // does the user have the premium upgrade?
+                boolean hasRemoveAds = inventory.hasPurchase(Utils.SKU_REMOVEADS);
+
+                // Ads
+                int count = globalApp.getGlobalCounter();
+                if (!hasRemoveAds) {
+                    if (((count % 2) == 0) && (count > 0)) {
+                        // vis reklame
+                        ad = new AdController(WebViewActivity.this, "688020490");
+                        ad.loadAd();
+                    }
+                }
+                globalApp.incrementGlobalCounter();
+            }
+        }
+    };
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -181,6 +219,12 @@ public class WebViewActivity extends ActionBarActivity {
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, webView.getUrl());
                 startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_this)));
+                return true;
+            case R.id.action_removeads:
+                startActivity(new Intent(WebViewActivity.this, InAppActivity.class));
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(WebViewActivity.this, SettingsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -202,6 +246,20 @@ public class WebViewActivity extends ActionBarActivity {
 
         SuperActivityToast.onSaveState(outState);
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (iabHelper != null) iabHelper.dispose();
+        iabHelper = null;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!iabHelper.handleActivityResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 }

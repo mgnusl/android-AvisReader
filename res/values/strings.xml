@@ -27,10 +27,11 @@
     <string name="pref_ads_summary">Fjern reklame</string>
 
     <!-- Purchase removeads -->
-    <string name="about_removeads">temp</string>
+    <string name="about_removeads">Dette vil fjerne all reklame i appen.</string>
     <string name="problem_purchasing">There was a problem processing the purchase.</string>
     <string name="setup_failed">In-app billing setup failed.</string>
     <string name="ad_remove_success">Advertisements will now be removed.</string>
+    <string name="remove_ads">Fjern reklame.</string>
 
     <string-array name="textsizes_entries">
         <item name="60">Ekstra liten</item>

@@ -8,7 +8,7 @@
 
     <!-- Actionbar Theme -->
     <style name="ActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/actionbar_color4</item>
+        <item name="android:background">@color/actionbar_color5</item>
     </style>
 
     <style name="ActionBarWidget" parent="Theme.AppCompat.Light.DarkActionBar">

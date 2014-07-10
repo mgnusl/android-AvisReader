@@ -16,7 +16,6 @@ import android.view.*;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.ktwaxqztxlujp.AdController;
@@ -116,17 +115,18 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
             } else {
                 // does the user have the premium upgrade?
                 boolean hasRemoveAds = inventory.hasPurchase(Utils.SKU_REMOVEADS);
-                superToast.setText("Har tidligere kjøpt removeads: " + hasRemoveAds);
+                superToast.setText("Har tidligere kjøpt removeads: " + hasRemoveAds + ". " + globalApp.getGlobalCounter());
                 superToast.setBackground(SuperToast.Background.BLUE);
                 superToast.show();
 
                 // Ads
                 int count = globalApp.getGlobalCounter();
-                //if (((count % 18) == 0) && (count > 0)) {
-                if (true) {
-                    // vis reklame
-                    ad = new AdController(HomeActivity.this, "692563668");
-                    ad.loadAd();
+                if (!hasRemoveAds) {
+                    if (((count % 2) == 0) && (count > 0)) {
+                        // vis reklame
+                        ad = new AdController(HomeActivity.this, "692563668");
+                        ad.loadAd();
+                    }
                 }
                 globalApp.incrementGlobalCounter();
             }
@@ -239,6 +239,10 @@ public class HomeActivity extends ActionBarActivity implements SearchView.OnQuer
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                return true;
+            case R.id.action_removeads:
+                startActivity(new Intent(HomeActivity.this, InAppActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
 

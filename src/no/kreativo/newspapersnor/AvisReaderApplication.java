@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 public class AvisReaderApplication extends Application {
 
     public static final String PREFS_NAME = "PrefsFile";
+    public static final String GLOBAL_COUNTER = "globalteller";
 
     @Override
     public void onCreate() {
@@ -17,6 +18,14 @@ public class AvisReaderApplication extends Application {
         boolean isFirstLaunch = settings.getBoolean("isFirstLaunch", true);
         setIsFirstLaunch(isFirstLaunch);
 
+        // Setup globalCounter
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        int globalCounter = preferences.getInt(GLOBAL_COUNTER, -1);
+        if (globalCounter == -1) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(GLOBAL_COUNTER, 0);
+            editor.commit();
+        }
     }
 
     public boolean isFirstLaunch() {
@@ -32,17 +41,16 @@ public class AvisReaderApplication extends Application {
     }
 
     public void incrementGlobalCounter() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();
-        int current = getGlobalCounter();
-        editor.putInt("globalteller", current++);
+        int current = preferences.getInt(GLOBAL_COUNTER, -1);
+        current++;
+        editor.putInt(GLOBAL_COUNTER, current);
         editor.commit();
-
     }
 
     public int getGlobalCounter() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        int tell = preferences.getInt("globalteller", -1);
-        return tell;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        return preferences.getInt(GLOBAL_COUNTER, -1);
     }
 }

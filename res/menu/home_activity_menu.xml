@@ -15,6 +15,11 @@
         avisreader:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/action_removeads"
+        android:title="@string/pref_ads"
+        avisreader:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_settings"
         android:title="@string/settings"
         avisreader:showAsAction="never"/>
